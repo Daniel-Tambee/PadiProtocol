@@ -1,0 +1,45 @@
+{
+	"compiler": {
+		"version": "0.8.26+commit.8a97fa7a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/PadiTypes.sol": "PadiTypes"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/PadiTypes.sol": {
+			"keccak256": "0x3ce7c3d93ed8248c495c2cf508f91fbf1dae81f50a1d8fd5ac81649e31b5fb8d",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://a16c79bc32cfe70d825e4c088cb0874f9a64aa116fad2a1e827cc2c40062d3b6",
+				"dweb:/ipfs/QmdMfhbL8vNi7PPqEePSfg1erz9kd4SjYBCCNnREMGVnEG"
+			]
+		}
+	},
+	"version": 1
+}

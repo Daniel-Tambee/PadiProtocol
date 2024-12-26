@@ -1,0 +1,853 @@
+{
+	"compiler": {
+		"version": "0.8.26+commit.8a97fa7a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_storageContract",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_paymentToken",
+						"type": "address"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "caseId",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "memberAddress",
+						"type": "address"
+					}
+				],
+				"name": "CaseAdded",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "caseId",
+						"type": "uint256"
+					}
+				],
+				"name": "CaseResolved",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "caseId",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "memberAddress",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"name": "EmergencyResponseConfirmed",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "rewardAmount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "caseId",
+						"type": "uint256"
+					}
+				],
+				"name": "LawyerRewarded",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					}
+				],
+				"name": "LawyerSignedUp",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "memberAddress",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "MembershipNFTMinted",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "tokenAddress",
+						"type": "address"
+					}
+				],
+				"name": "PaymentTokenUpdated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "memberAddress",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "representativeAddress",
+						"type": "address"
+					}
+				],
+				"name": "RepresentativeAssigned",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "caseId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "memberAddress",
+						"type": "address"
+					}
+				],
+				"name": "addCase",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "memberAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "representativeAddress",
+						"type": "address"
+					}
+				],
+				"name": "assignRepresentative",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "memberAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "caseId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					}
+				],
+				"name": "confirmEmergencyResponse",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					}
+				],
+				"name": "getOpenCases",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "caseIds",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getPaymentToken",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "memberAddress",
+						"type": "address"
+					}
+				],
+				"name": "getRepresentative",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "representativeAddress",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					}
+				],
+				"name": "isLawyer",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "isRegistered",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "memberAddress",
+						"type": "address"
+					}
+				],
+				"name": "isMember",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "isVerified",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "memberAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "metadataURI",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "paymentAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "mintMembershipNFT",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "paymentToken",
+				"outputs": [
+					{
+						"internalType": "contract IERC20",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "caseId",
+						"type": "uint256"
+					}
+				],
+				"name": "resolveCase",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "caseId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "rewardAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "rewardLawyerForEmergency",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "tokenAddress",
+						"type": "address"
+					}
+				],
+				"name": "setPaymentToken",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					}
+				],
+				"name": "signUpLawyer",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "storageContract",
+				"outputs": [
+					{
+						"internalType": "contract IPadiStorage",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"events": {
+				"CaseAdded(address,uint256,address)": {
+					"params": {
+						"caseId": "The unique identifier for the case.",
+						"lawyerAddress": "The address of the lawyer handling the case.",
+						"memberAddress": "The address of the member involved in the case."
+					}
+				},
+				"CaseResolved(address,uint256)": {
+					"params": {
+						"caseId": "The unique identifier for the case.",
+						"lawyerAddress": "The address of the lawyer handling the case."
+					}
+				},
+				"EmergencyResponseConfirmed(address,uint256,address,uint256)": {
+					"params": {
+						"caseId": "The unique identifier for the case.",
+						"lawyerAddress": "The address of the lawyer responding to the emergency.",
+						"memberAddress": "The address of the member involved.",
+						"timestamp": "The time when the response was confirmed."
+					}
+				},
+				"LawyerRewarded(address,uint256,uint256)": {
+					"params": {
+						"caseId": "The unique identifier for the case.",
+						"lawyerAddress": "The address of the lawyer receiving the reward.",
+						"rewardAmount": "The amount of reward given to the lawyer."
+					}
+				},
+				"LawyerSignedUp(address)": {
+					"params": {
+						"lawyerAddress": "The address of the lawyer signing up."
+					}
+				},
+				"MembershipNFTMinted(address,uint256)": {
+					"params": {
+						"memberAddress": "The address of the new member.",
+						"tokenId": "The ID of the minted NFT."
+					}
+				},
+				"PaymentTokenUpdated(address)": {
+					"params": {
+						"tokenAddress": "The new token contract address."
+					}
+				},
+				"RepresentativeAssigned(address,address)": {
+					"params": {
+						"memberAddress": "The address of the member.",
+						"representativeAddress": "The address of the legal representative."
+					}
+				}
+			},
+			"kind": "dev",
+			"methods": {
+				"addCase(address,uint256,address)": {
+					"params": {
+						"caseId": "A unique identifier for the case.",
+						"lawyerAddress": "The address of the lawyer handling the case.",
+						"memberAddress": "The address of the member involved in the case."
+					}
+				},
+				"assignRepresentative(address,address)": {
+					"params": {
+						"memberAddress": "The address of the member.",
+						"representativeAddress": "The address of the legal representative."
+					}
+				},
+				"confirmEmergencyResponse(address,uint256,address)": {
+					"params": {
+						"caseId": "The unique identifier for the case.",
+						"lawyerAddress": "The address of the lawyer (Padi) responding to the emergency.",
+						"memberAddress": "The address of the member calling for help."
+					}
+				},
+				"getOpenCases(address)": {
+					"params": {
+						"lawyerAddress": "The address of the lawyer."
+					},
+					"returns": {
+						"caseIds": "An array of unique identifiers for open cases."
+					}
+				},
+				"getPaymentToken()": {
+					"returns": {
+						"_0": "The address of the token contract."
+					}
+				},
+				"getRepresentative(address)": {
+					"params": {
+						"memberAddress": "The address of the member."
+					},
+					"returns": {
+						"representativeAddress": "The address of the legal representative."
+					}
+				},
+				"isLawyer(address)": {
+					"params": {
+						"lawyerAddress": "The address to check."
+					},
+					"returns": {
+						"isRegistered": "True if the address is a registered lawyer."
+					}
+				},
+				"isMember(address)": {
+					"params": {
+						"memberAddress": "The address to check."
+					},
+					"returns": {
+						"isVerified": "True if the address is a verified member."
+					}
+				},
+				"mintMembershipNFT(address,string,uint256)": {
+					"params": {
+						"memberAddress": "The address of the new member.",
+						"metadataURI": "The metadata URI for the NFT.",
+						"paymentAmount": "The amount of the specific token to be paid."
+					}
+				},
+				"resolveCase(address,uint256)": {
+					"params": {
+						"caseId": "The unique identifier for the case.",
+						"lawyerAddress": "The address of the lawyer handling the case."
+					}
+				},
+				"rewardLawyerForEmergency(address,uint256,uint256)": {
+					"params": {
+						"caseId": "The unique identifier for the case.",
+						"lawyerAddress": "The address of the lawyer (Padi).",
+						"rewardAmount": "The amount of tokens to reward the lawyer."
+					}
+				},
+				"setPaymentToken(address)": {
+					"params": {
+						"tokenAddress": "The address of the token contract."
+					}
+				},
+				"signUpLawyer(address)": {
+					"params": {
+						"lawyerAddress": "The address of the lawyer signing up."
+					}
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"events": {
+				"CaseAdded(address,uint256,address)": {
+					"notice": "Event emitted when a new case is added for a lawyer."
+				},
+				"CaseResolved(address,uint256)": {
+					"notice": "Event emitted when a case is resolved for a lawyer."
+				},
+				"EmergencyResponseConfirmed(address,uint256,address,uint256)": {
+					"notice": "Event emitted when an emergency response is confirmed by a lawyer."
+				},
+				"LawyerRewarded(address,uint256,uint256)": {
+					"notice": "Event emitted when a lawyer is rewarded after confirming an emergency response."
+				},
+				"LawyerSignedUp(address)": {
+					"notice": "Event emitted when a lawyer signs up as a legal representative."
+				},
+				"MembershipNFTMinted(address,uint256)": {
+					"notice": "Event emitted when a membership NFT is minted."
+				},
+				"PaymentTokenUpdated(address)": {
+					"notice": "Event emitted when the payment token is updated."
+				},
+				"RepresentativeAssigned(address,address)": {
+					"notice": "Event emitted when a legal representative is assigned to a member."
+				}
+			},
+			"kind": "user",
+			"methods": {
+				"addCase(address,uint256,address)": {
+					"notice": "Track a new case for a lawyer."
+				},
+				"assignRepresentative(address,address)": {
+					"notice": "Assign a legal representative (Padi) to a member."
+				},
+				"confirmEmergencyResponse(address,uint256,address)": {
+					"notice": "Confirm that a lawyer (Padi) has responded to an emergency call from a member."
+				},
+				"getOpenCases(address)": {
+					"notice": "Get the list of open cases for a lawyer."
+				},
+				"getPaymentToken()": {
+					"notice": "Get the current token contract address used for payments."
+				},
+				"getRepresentative(address)": {
+					"notice": "Get the legal representative of a member."
+				},
+				"isLawyer(address)": {
+					"notice": "Check if an address is a registered lawyer."
+				},
+				"isMember(address)": {
+					"notice": "Check if an address is a verified member."
+				},
+				"mintMembershipNFT(address,string,uint256)": {
+					"notice": "Mint an NFT ID card for a new member."
+				},
+				"resolveCase(address,uint256)": {
+					"notice": "Mark a case as resolved for a lawyer."
+				},
+				"rewardLawyerForEmergency(address,uint256,uint256)": {
+					"notice": "Reward a lawyer (Padi) after confirming their response to an emergency."
+				},
+				"setPaymentToken(address)": {
+					"notice": "Set the token contract address used for payments."
+				},
+				"signUpLawyer(address)": {
+					"notice": "Sign up a lawyer as a legal representative."
+				}
+			},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/PadiProtocol.sol": "PadiProtocol"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"@openzeppelin/contracts/interfaces/draft-IERC6093.sol": {
+			"keccak256": "0x880da465c203cec76b10d72dbd87c80f387df4102274f23eea1f9c9b0918792b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://399594cd8bb0143bc9e55e0f1d071d0d8c850a394fb7a319d50edd55d9ed822b",
+				"dweb:/ipfs/QmbPZzgtT6LEm9CMqWfagQFwETbV1ztpECBB1DtQHrKiRz"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC20/IERC20.sol": {
+			"keccak256": "0xe06a3f08a987af6ad2e1c1e774405d4fe08f1694b67517438b467cecf0da0ef7",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://df6f0c459663c9858b6cba2cda1d14a7d05a985bed6d2de72bd8e78c25ee79db",
+				"dweb:/ipfs/QmeTTxZ7qVk9rjEv2R4CpCwdf8UMCcRqDNMvzNxHc3Fnn9"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC721/ERC721.sol": {
+			"keccak256": "0x39ed367e54765186281efcfe83e47cf0ad62cc879f10e191360712507125f29a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://2c5ae6d85bd48cca8d6d2fcec8c63efd86f56f8a5832577a47e403ce0e65cb09",
+				"dweb:/ipfs/QmUtcS8AbRSWhuc61puYet58os8FvSqm329ChoW8wwZXZk"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC721/IERC721.sol": {
+			"keccak256": "0x5dc63d1c6a12fe1b17793e1745877b2fcbe1964c3edfd0a482fac21ca8f18261",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6b7f97c5960a50fd1822cb298551ffc908e37b7893a68d6d08bce18a11cb0f11",
+				"dweb:/ipfs/QmQQvxBytoY1eBt3pRQDmvH2hZ2yjhs12YqVfzGm7KSURq"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol": {
+			"keccak256": "0xb5afb8e8eebc4d1c6404df2f5e1e6d2c3d24fd01e5dfc855314951ecfaae462d",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://78586466c424f076c6a2a551d848cfbe3f7c49e723830807598484a1047b3b34",
+				"dweb:/ipfs/Qmb717ovcFxm7qgNKEShiV6M9SPR3v1qnNpAGH84D6w29p"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol": {
+			"keccak256": "0x37d1aaaa5a2908a09e9dcf56a26ddf762ecf295afb5964695937344fc6802ce1",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://ed0bfc1b92153c5000e50f4021367b931bbe96372ac6facec3c4961b72053d02",
+				"dweb:/ipfs/Qmbwp8VDerjS5SV1quwHH1oMXxPQ93fzfLVqJ2RCqbowGE"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC721/utils/ERC721Utils.sol": {
+			"keccak256": "0x40399695922383778f9f540a620bec475a2f8e0f08d41f0005682842e28a9855",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://746d295e403931aeb9d6065fd5a0871f43ab5459814a60623611e4b6641a09fd",
+				"dweb:/ipfs/QmWrgT8YJrQ9FfD1o3YYArwo57e7MGdpFKuM74qJ4qE34E"
+			]
+		},
+		"@openzeppelin/contracts/utils/Context.sol": {
+			"keccak256": "0x493033a8d1b176a037b2cc6a04dad01a5c157722049bbecf632ca876224dd4b2",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6a708e8a5bdb1011c2c381c9a5cfd8a9a956d7d0a9dc1bd8bcdaf52f76ef2f12",
+				"dweb:/ipfs/Qmax9WHBnVsZP46ZxEMNRQpLQnrdE4dK8LehML1Py8FowF"
+			]
+		},
+		"@openzeppelin/contracts/utils/Panic.sol": {
+			"keccak256": "0xf7fe324703a64fc51702311dc51562d5cb1497734f074e4f483bfb6717572d7a",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://c6a5ff4f9fd8649b7ee20800b7fa387d3465bd77cf20c2d1068cd5c98e1ed57a",
+				"dweb:/ipfs/QmVSaVJf9FXFhdYEYeCEfjMVHrxDh5qL4CGkxdMWpQCrqG"
+			]
+		},
+		"@openzeppelin/contracts/utils/Strings.sol": {
+			"keccak256": "0x725209b582291bb83058e3078624b53d15a133f7401c30295e7f3704181d2aed",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://0564ddb19c6d870e27b789d8f985283d815267ad7224883c2d5243c8bacc7dc0",
+				"dweb:/ipfs/QmeC953H4sj88ZRFdJNFdmpf7J9SksP1wK4jyMHLo66z49"
+			]
+		},
+		"@openzeppelin/contracts/utils/introspection/ERC165.sol": {
+			"keccak256": "0xddce8e17e3d3f9ed818b4f4c4478a8262aab8b11ed322f1bf5ed705bb4bd97fa",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://8084aa71a4cc7d2980972412a88fe4f114869faea3fefa5436431644eb5c0287",
+				"dweb:/ipfs/Qmbqfs5dRdPvHVKY8kTaeyc65NdqXRQwRK7h9s5UJEhD1p"
+			]
+		},
+		"@openzeppelin/contracts/utils/introspection/IERC165.sol": {
+			"keccak256": "0x79796192ec90263f21b464d5bc90b777a525971d3de8232be80d9c4f9fb353b8",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://f6fda447a62815e8064f47eff0dd1cf58d9207ad69b5d32280f8d7ed1d1e4621",
+				"dweb:/ipfs/QmfDRc7pxfaXB2Dh9np5Uf29Na3pQ7tafRS684wd3GLjVL"
+			]
+		},
+		"@openzeppelin/contracts/utils/math/Math.sol": {
+			"keccak256": "0xa00be322d7db5786750ce0ac7e2f5b633ac30a5ed5fa1ced1e74acfc19acecea",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://6c84e822f87cbdc4082533b626667b6928715bb2b1e8e7eb96954cebb9e38c8d",
+				"dweb:/ipfs/QmZmy9dgxLTerBAQDuuHqbL6EpgRxddqgv5KmwpXYVbKz1"
+			]
+		},
+		"@openzeppelin/contracts/utils/math/SafeCast.sol": {
+			"keccak256": "0x195533c86d0ef72bcc06456a4f66a9b941f38eb403739b00f21fd7c1abd1ae54",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://b1d578337048cad08c1c03041cca5978eff5428aa130c781b271ad9e5566e1f8",
+				"dweb:/ipfs/QmPFKL2r9CBsMwmUqqdcFPfHZB2qcs9g1HDrPxzWSxomvy"
+			]
+		},
+		"@openzeppelin/contracts/utils/math/SignedMath.sol": {
+			"keccak256": "0xb1970fac7b64e6c09611e6691791e848d5e3fe410fa5899e7df2e0afd77a99e3",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://db5fbb3dddd8b7047465b62575d96231ba8a2774d37fb4737fbf23340fabbb03",
+				"dweb:/ipfs/QmVUSvooZKEdEdap619tcJjTLcAuH6QBdZqAzWwnAXZAWJ"
+			]
+		},
+		"contracts/IPadiProtocol.sol": {
+			"keccak256": "0x3093698155a622326df2c130475b6fbb81266efadef01f68df130accfae9fc2c",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://4ceae5f6a5e1eedaae252c6f65157291459b84d2e5596627cca9f29bb3709e8c",
+				"dweb:/ipfs/QmZfYSyrnWZEqoqarDWV4rNexk4fcsCnYT8BBmeyKB2K3a"
+			]
+		},
+		"contracts/IPadiStorage.sol": {
+			"keccak256": "0x82d13131607c8fb1c5e616d57dbcc7c3c7f821087d995762c0eeada453600230",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://b2abc21b18ecfa013c82dcb4bcc662b5dd819eaf58ef32fdcac0e5aed24834e1",
+				"dweb:/ipfs/QmXRtmuXj8GJptepMLCPqk5JaSA73fpM9T3UVrXtQGu13n"
+			]
+		},
+		"contracts/PadiProtocol.sol": {
+			"keccak256": "0xbaa81a161f4ee3d4cb8eb8002fa2d1ed139a68a700197fed2379478112e5ec13",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://eb24bca0a692731fda75cde0bee33c0e5562f134affffe943ac4d3862fa48ff5",
+				"dweb:/ipfs/QmTMFSENNpxfEqJ7fKm6Kg7GhubhmAQUBoMRi1nMCsGBts"
+			]
+		},
+		"contracts/PadiStorage.sol": {
+			"keccak256": "0xc2ceacc0154444ff160324388017e4a147642e76652ca714db148c15ad1e2954",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://b762a835d9189f355f5417eeeffefbbd6b556ec1e7715cf4a5bd4fd64ff475b0",
+				"dweb:/ipfs/QmNpcAVGF88ZKUNGc585NaskBWYercmnSMi3cdbapX8wjq"
+			]
+		},
+		"contracts/PadiTypes.sol": {
+			"keccak256": "0xd1e98d556b102b46b9f5eb715e0cc85c47dd0adf5b213d71fb12a5c6e1fb368b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://9b11cf0fe9821f142674d1dc9d32d7b3a1dd1c69ca56b0f90281b76df942b035",
+				"dweb:/ipfs/QmRghABHrJU78h2sqgrctRDqz4RiRims3J6DXZbYFt5fc4"
+			]
+		}
+	},
+	"version": 1
+}

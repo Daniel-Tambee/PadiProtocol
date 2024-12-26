@@ -1,0 +1,508 @@
+{
+	"compiler": {
+		"version": "0.8.26+commit.8a97fa7a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "admin",
+						"type": "address"
+					}
+				],
+				"name": "AdminAdded",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "admin",
+						"type": "address"
+					}
+				],
+				"name": "AdminRemoved",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "caseId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "member",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "lawyer",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "bool",
+						"name": "resolved",
+						"type": "bool"
+					}
+				],
+				"name": "CaseUpdated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "lawyer",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "bool",
+						"name": "active",
+						"type": "bool"
+					}
+				],
+				"name": "LawyerUpdated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "member",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "nftId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "bool",
+						"name": "active",
+						"type": "bool"
+					}
+				],
+				"name": "MemberUpdated",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "id",
+								"type": "uint256"
+							},
+							{
+								"internalType": "address",
+								"name": "member",
+								"type": "address"
+							},
+							{
+								"internalType": "address",
+								"name": "lawyer",
+								"type": "address"
+							},
+							{
+								"internalType": "string",
+								"name": "description",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "creationDate",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "resolutionDate",
+								"type": "uint256"
+							},
+							{
+								"internalType": "bool",
+								"name": "resolved",
+								"type": "bool"
+							},
+							{
+								"internalType": "uint256",
+								"name": "rewardAmount",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct PadiTypes.Case",
+						"name": "_case",
+						"type": "tuple"
+					}
+				],
+				"name": "addOrUpdateCase",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "wallet",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256[]",
+								"name": "caseIds",
+								"type": "uint256[]"
+							},
+							{
+								"internalType": "string",
+								"name": "profileURI",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "joinDate",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "totalRewards",
+								"type": "uint256"
+							},
+							{
+								"internalType": "bool",
+								"name": "active",
+								"type": "bool"
+							}
+						],
+						"internalType": "struct PadiTypes.Lawyer",
+						"name": "lawyer",
+						"type": "tuple"
+					}
+				],
+				"name": "addOrUpdateLawyer",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "wallet",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256",
+								"name": "nftId",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "metadataURI",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "joinDate",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "totalCases",
+								"type": "uint256"
+							},
+							{
+								"internalType": "bool",
+								"name": "active",
+								"type": "bool"
+							}
+						],
+						"internalType": "struct PadiTypes.Member",
+						"name": "member",
+						"type": "tuple"
+					}
+				],
+				"name": "addOrUpdateMember",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "caseId",
+						"type": "address"
+					}
+				],
+				"name": "cases",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "id",
+								"type": "uint256"
+							},
+							{
+								"internalType": "address",
+								"name": "member",
+								"type": "address"
+							},
+							{
+								"internalType": "address",
+								"name": "lawyer",
+								"type": "address"
+							},
+							{
+								"internalType": "string",
+								"name": "description",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "creationDate",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "resolutionDate",
+								"type": "uint256"
+							},
+							{
+								"internalType": "bool",
+								"name": "resolved",
+								"type": "bool"
+							},
+							{
+								"internalType": "uint256",
+								"name": "rewardAmount",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct PadiTypes.Case",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "lawyer",
+						"type": "address"
+					}
+				],
+				"name": "getLawyerCases",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getNextCaseId",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getNextMemberId",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					}
+				],
+				"name": "lawyers",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "wallet",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256[]",
+								"name": "caseIds",
+								"type": "uint256[]"
+							},
+							{
+								"internalType": "string",
+								"name": "profileURI",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "joinDate",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "totalRewards",
+								"type": "uint256"
+							},
+							{
+								"internalType": "bool",
+								"name": "active",
+								"type": "bool"
+							}
+						],
+						"internalType": "struct PadiTypes.Lawyer",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "memberId",
+						"type": "address"
+					}
+				],
+				"name": "members",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "wallet",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256",
+								"name": "nftId",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "metadataURI",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "joinDate",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "totalCases",
+								"type": "uint256"
+							},
+							{
+								"internalType": "bool",
+								"name": "active",
+								"type": "bool"
+							}
+						],
+						"internalType": "struct PadiTypes.Member",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/IPadiStorage.sol": "IPadiStorage"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/IPadiStorage.sol": {
+			"keccak256": "0x9f3cee5fa90265874f4120c784611bd1f0642efdd990c8d3ec567170f04de7e5",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://800c757b0ea69beb9f57f25b5aed603776251b16a74768e0638d9dd039a0207c",
+				"dweb:/ipfs/QmWRU7BuPEsJrpouBbZZUX3rPuGCW7QhsBdWSJiSfqMArE"
+			]
+		},
+		"contracts/PadiTypes.sol": {
+			"keccak256": "0xd1e98d556b102b46b9f5eb715e0cc85c47dd0adf5b213d71fb12a5c6e1fb368b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://9b11cf0fe9821f142674d1dc9d32d7b3a1dd1c69ca56b0f90281b76df942b035",
+				"dweb:/ipfs/QmRghABHrJU78h2sqgrctRDqz4RiRims3J6DXZbYFt5fc4"
+			]
+		}
+	},
+	"version": 1
+}

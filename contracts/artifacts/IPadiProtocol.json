@@ -1,0 +1,481 @@
+{
+	"deploy": {
+		"VM:-": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"main:1": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"ropsten:3": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"rinkeby:4": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"kovan:42": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"goerli:5": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"Custom": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		}
+	},
+	"data": {
+		"bytecode": {
+			"functionDebugData": {},
+			"generatedSources": [],
+			"linkReferences": {},
+			"object": "",
+			"opcodes": "",
+			"sourceMap": ""
+		},
+		"deployedBytecode": {
+			"functionDebugData": {},
+			"generatedSources": [],
+			"immutableReferences": {},
+			"linkReferences": {},
+			"object": "",
+			"opcodes": "",
+			"sourceMap": ""
+		},
+		"gasEstimates": null,
+		"methodIdentifiers": {
+			"addCase(address,address,string,uint256)": "91b0ad5b",
+			"assignRepresentative(address,address)": "4158c1b5",
+			"confirmEmergencyResponse(address,uint256,address)": "241f8715",
+			"getOpenCases(address)": "e1a9abf1",
+			"getPaymentToken()": "d41c3a65",
+			"getRepresentative(address)": "edd501fa",
+			"isLawyer(address)": "5939a84e",
+			"isMember(address)": "a230c524",
+			"mintMembershipNFT(address,string,uint256)": "8baa5d8b",
+			"resolveCase(address,uint256)": "49678605",
+			"rewardLawyerForEmergency(address,uint256,uint256)": "aa9aa17a",
+			"setPaymentToken(address)": "6a326ab1",
+			"signUpLawyer(address)": "70ef2e2d"
+		}
+	},
+	"abi": [
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "lawyerAddress",
+					"type": "address"
+				},
+				{
+					"indexed": true,
+					"internalType": "uint256",
+					"name": "caseId",
+					"type": "uint256"
+				},
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "memberAddress",
+					"type": "address"
+				}
+			],
+			"name": "CaseAdded",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "lawyerAddress",
+					"type": "address"
+				},
+				{
+					"indexed": true,
+					"internalType": "uint256",
+					"name": "caseId",
+					"type": "uint256"
+				}
+			],
+			"name": "CaseResolved",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "lawyerAddress",
+					"type": "address"
+				},
+				{
+					"indexed": true,
+					"internalType": "uint256",
+					"name": "caseId",
+					"type": "uint256"
+				},
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "memberAddress",
+					"type": "address"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "timestamp",
+					"type": "uint256"
+				}
+			],
+			"name": "EmergencyResponseConfirmed",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "lawyerAddress",
+					"type": "address"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "rewardAmount",
+					"type": "uint256"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "caseId",
+					"type": "uint256"
+				}
+			],
+			"name": "LawyerRewarded",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "lawyerAddress",
+					"type": "address"
+				}
+			],
+			"name": "LawyerSignedUp",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "memberAddress",
+					"type": "address"
+				},
+				{
+					"indexed": true,
+					"internalType": "uint256",
+					"name": "tokenId",
+					"type": "uint256"
+				}
+			],
+			"name": "MembershipNFTMinted",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "tokenAddress",
+					"type": "address"
+				}
+			],
+			"name": "PaymentTokenUpdated",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "memberAddress",
+					"type": "address"
+				},
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "representativeAddress",
+					"type": "address"
+				}
+			],
+			"name": "RepresentativeAssigned",
+			"type": "event"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "lawyerAddress",
+					"type": "address"
+				},
+				{
+					"internalType": "address",
+					"name": "memberAddress",
+					"type": "address"
+				},
+				{
+					"internalType": "string",
+					"name": "description",
+					"type": "string"
+				},
+				{
+					"internalType": "uint256",
+					"name": "rewardAmount",
+					"type": "uint256"
+				}
+			],
+			"name": "addCase",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "memberAddress",
+					"type": "address"
+				},
+				{
+					"internalType": "address",
+					"name": "representativeAddress",
+					"type": "address"
+				}
+			],
+			"name": "assignRepresentative",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "memberAddress",
+					"type": "address"
+				},
+				{
+					"internalType": "uint256",
+					"name": "caseId",
+					"type": "uint256"
+				},
+				{
+					"internalType": "address",
+					"name": "lawyerAddress",
+					"type": "address"
+				}
+			],
+			"name": "confirmEmergencyResponse",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "lawyerAddress",
+					"type": "address"
+				}
+			],
+			"name": "getOpenCases",
+			"outputs": [
+				{
+					"internalType": "uint256[]",
+					"name": "caseIds",
+					"type": "uint256[]"
+				}
+			],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "getPaymentToken",
+			"outputs": [
+				{
+					"internalType": "address",
+					"name": "tokenAddress",
+					"type": "address"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "memberAddress",
+					"type": "address"
+				}
+			],
+			"name": "getRepresentative",
+			"outputs": [
+				{
+					"internalType": "address",
+					"name": "representativeAddress",
+					"type": "address"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "lawyerAddress",
+					"type": "address"
+				}
+			],
+			"name": "isLawyer",
+			"outputs": [
+				{
+					"internalType": "bool",
+					"name": "isRegistered",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "memberAddress",
+					"type": "address"
+				}
+			],
+			"name": "isMember",
+			"outputs": [
+				{
+					"internalType": "bool",
+					"name": "isVerified",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "memberAddress",
+					"type": "address"
+				},
+				{
+					"internalType": "string",
+					"name": "metadataURI",
+					"type": "string"
+				},
+				{
+					"internalType": "uint256",
+					"name": "paymentAmount",
+					"type": "uint256"
+				}
+			],
+			"name": "mintMembershipNFT",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "lawyerAddress",
+					"type": "address"
+				},
+				{
+					"internalType": "uint256",
+					"name": "caseId",
+					"type": "uint256"
+				}
+			],
+			"name": "resolveCase",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "lawyerAddress",
+					"type": "address"
+				},
+				{
+					"internalType": "uint256",
+					"name": "caseId",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "rewardAmount",
+					"type": "uint256"
+				}
+			],
+			"name": "rewardLawyerForEmergency",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "tokenAddress",
+					"type": "address"
+				}
+			],
+			"name": "setPaymentToken",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "lawyerAddress",
+					"type": "address"
+				}
+			],
+			"name": "signUpLawyer",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		}
+	]
+}

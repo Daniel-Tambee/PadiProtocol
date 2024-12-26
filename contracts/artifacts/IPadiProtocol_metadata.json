@@ -1,0 +1,663 @@
+{
+	"compiler": {
+		"version": "0.8.26+commit.8a97fa7a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "caseId",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "memberAddress",
+						"type": "address"
+					}
+				],
+				"name": "CaseAdded",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "caseId",
+						"type": "uint256"
+					}
+				],
+				"name": "CaseResolved",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "caseId",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "memberAddress",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"name": "EmergencyResponseConfirmed",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "rewardAmount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "caseId",
+						"type": "uint256"
+					}
+				],
+				"name": "LawyerRewarded",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					}
+				],
+				"name": "LawyerSignedUp",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "memberAddress",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "MembershipNFTMinted",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "tokenAddress",
+						"type": "address"
+					}
+				],
+				"name": "PaymentTokenUpdated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "memberAddress",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "representativeAddress",
+						"type": "address"
+					}
+				],
+				"name": "RepresentativeAssigned",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "memberAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "description",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "rewardAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "addCase",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "memberAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "representativeAddress",
+						"type": "address"
+					}
+				],
+				"name": "assignRepresentative",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "memberAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "caseId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					}
+				],
+				"name": "confirmEmergencyResponse",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					}
+				],
+				"name": "getOpenCases",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "caseIds",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getPaymentToken",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "tokenAddress",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "memberAddress",
+						"type": "address"
+					}
+				],
+				"name": "getRepresentative",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "representativeAddress",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					}
+				],
+				"name": "isLawyer",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "isRegistered",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "memberAddress",
+						"type": "address"
+					}
+				],
+				"name": "isMember",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "isVerified",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "memberAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "metadataURI",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "paymentAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "mintMembershipNFT",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "caseId",
+						"type": "uint256"
+					}
+				],
+				"name": "resolveCase",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "caseId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "rewardAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "rewardLawyerForEmergency",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "tokenAddress",
+						"type": "address"
+					}
+				],
+				"name": "setPaymentToken",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					}
+				],
+				"name": "signUpLawyer",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"events": {
+				"CaseAdded(address,uint256,address)": {
+					"params": {
+						"caseId": "The unique identifier for the case.",
+						"lawyerAddress": "The address of the lawyer handling the case.",
+						"memberAddress": "The address of the member involved in the case."
+					}
+				},
+				"CaseResolved(address,uint256)": {
+					"params": {
+						"caseId": "The unique identifier for the case.",
+						"lawyerAddress": "The address of the lawyer handling the case."
+					}
+				},
+				"EmergencyResponseConfirmed(address,uint256,address,uint256)": {
+					"params": {
+						"caseId": "The unique identifier for the case.",
+						"lawyerAddress": "The address of the lawyer responding to the emergency.",
+						"memberAddress": "The address of the member involved.",
+						"timestamp": "The time when the response was confirmed."
+					}
+				},
+				"LawyerRewarded(address,uint256,uint256)": {
+					"params": {
+						"caseId": "The unique identifier for the case.",
+						"lawyerAddress": "The address of the lawyer receiving the reward.",
+						"rewardAmount": "The amount of reward given to the lawyer."
+					}
+				},
+				"LawyerSignedUp(address)": {
+					"params": {
+						"lawyerAddress": "The address of the lawyer signing up."
+					}
+				},
+				"MembershipNFTMinted(address,uint256)": {
+					"params": {
+						"memberAddress": "The address of the new member.",
+						"tokenId": "The ID of the minted NFT."
+					}
+				},
+				"PaymentTokenUpdated(address)": {
+					"params": {
+						"tokenAddress": "The new token contract address."
+					}
+				},
+				"RepresentativeAssigned(address,address)": {
+					"params": {
+						"memberAddress": "The address of the member.",
+						"representativeAddress": "The address of the legal representative."
+					}
+				}
+			},
+			"kind": "dev",
+			"methods": {
+				"addCase(address,address,string,uint256)": {
+					"params": {
+						"lawyerAddress": "The address of the lawyer handling the case.",
+						"memberAddress": "The address of the member involved in the case."
+					}
+				},
+				"assignRepresentative(address,address)": {
+					"params": {
+						"memberAddress": "The address of the member.",
+						"representativeAddress": "The address of the legal representative."
+					}
+				},
+				"confirmEmergencyResponse(address,uint256,address)": {
+					"params": {
+						"caseId": "The unique identifier for the case.",
+						"lawyerAddress": "The address of the lawyer (Padi) responding to the emergency.",
+						"memberAddress": "The address of the member calling for help."
+					}
+				},
+				"getOpenCases(address)": {
+					"params": {
+						"lawyerAddress": "The address of the lawyer."
+					},
+					"returns": {
+						"caseIds": "An array of unique identifiers for open cases."
+					}
+				},
+				"getPaymentToken()": {
+					"returns": {
+						"tokenAddress": "The address of the token contract."
+					}
+				},
+				"getRepresentative(address)": {
+					"params": {
+						"memberAddress": "The address of the member."
+					},
+					"returns": {
+						"representativeAddress": "The address of the legal representative."
+					}
+				},
+				"isLawyer(address)": {
+					"params": {
+						"lawyerAddress": "The address to check."
+					},
+					"returns": {
+						"isRegistered": "True if the address is a registered lawyer."
+					}
+				},
+				"isMember(address)": {
+					"params": {
+						"memberAddress": "The address to check."
+					},
+					"returns": {
+						"isVerified": "True if the address is a verified member."
+					}
+				},
+				"mintMembershipNFT(address,string,uint256)": {
+					"params": {
+						"memberAddress": "The address of the new member.",
+						"metadataURI": "The metadata URI for the NFT.",
+						"paymentAmount": "The amount of the specific token to be paid."
+					}
+				},
+				"resolveCase(address,uint256)": {
+					"params": {
+						"caseId": "The unique identifier for the case.",
+						"lawyerAddress": "The address of the lawyer handling the case."
+					}
+				},
+				"rewardLawyerForEmergency(address,uint256,uint256)": {
+					"params": {
+						"caseId": "The unique identifier for the case.",
+						"lawyerAddress": "The address of the lawyer (Padi).",
+						"rewardAmount": "The amount of tokens to reward the lawyer."
+					}
+				},
+				"setPaymentToken(address)": {
+					"params": {
+						"tokenAddress": "The address of the token contract."
+					}
+				},
+				"signUpLawyer(address)": {
+					"params": {
+						"lawyerAddress": "The address of the lawyer signing up."
+					}
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"events": {
+				"CaseAdded(address,uint256,address)": {
+					"notice": "Event emitted when a new case is added for a lawyer."
+				},
+				"CaseResolved(address,uint256)": {
+					"notice": "Event emitted when a case is resolved for a lawyer."
+				},
+				"EmergencyResponseConfirmed(address,uint256,address,uint256)": {
+					"notice": "Event emitted when an emergency response is confirmed by a lawyer."
+				},
+				"LawyerRewarded(address,uint256,uint256)": {
+					"notice": "Event emitted when a lawyer is rewarded after confirming an emergency response."
+				},
+				"LawyerSignedUp(address)": {
+					"notice": "Event emitted when a lawyer signs up as a legal representative."
+				},
+				"MembershipNFTMinted(address,uint256)": {
+					"notice": "Event emitted when a membership NFT is minted."
+				},
+				"PaymentTokenUpdated(address)": {
+					"notice": "Event emitted when the payment token is updated."
+				},
+				"RepresentativeAssigned(address,address)": {
+					"notice": "Event emitted when a legal representative is assigned to a member."
+				}
+			},
+			"kind": "user",
+			"methods": {
+				"addCase(address,address,string,uint256)": {
+					"notice": "Track a new case for a lawyer."
+				},
+				"assignRepresentative(address,address)": {
+					"notice": "Assign a legal representative (Padi) to a member."
+				},
+				"confirmEmergencyResponse(address,uint256,address)": {
+					"notice": "Confirm that a lawyer (Padi) has responded to an emergency call from a member."
+				},
+				"getOpenCases(address)": {
+					"notice": "Get the list of open cases for a lawyer."
+				},
+				"getPaymentToken()": {
+					"notice": "Get the current token contract address used for payments."
+				},
+				"getRepresentative(address)": {
+					"notice": "Get the legal representative of a member."
+				},
+				"isLawyer(address)": {
+					"notice": "Check if an address is a registered lawyer."
+				},
+				"isMember(address)": {
+					"notice": "Check if an address is a verified member."
+				},
+				"mintMembershipNFT(address,string,uint256)": {
+					"notice": "Mint an NFT ID card for a new member."
+				},
+				"resolveCase(address,uint256)": {
+					"notice": "Mark a case as resolved for a lawyer."
+				},
+				"rewardLawyerForEmergency(address,uint256,uint256)": {
+					"notice": "Reward a lawyer (Padi) after confirming their response to an emergency."
+				},
+				"setPaymentToken(address)": {
+					"notice": "Set the token contract address used for payments."
+				},
+				"signUpLawyer(address)": {
+					"notice": "Sign up a lawyer as a legal representative."
+				}
+			},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"contracts/IPadiProtocol.sol": "IPadiProtocol"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"contracts/IPadiProtocol.sol": {
+			"keccak256": "0x3a09ba983603b67e05f296b53d285365f22fcf57c3abc2438e130a88a2c2d213",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://56513830611a3f734db8348a52e4736875fdcf3d380e739b160ae5c6a3deb859",
+				"dweb:/ipfs/QmPQe494KLqs4jX68BLJYEmU3c6K59x1UjJf7naLMk1GRc"
+			]
+		}
+	},
+	"version": 1
+}
