@@ -412,6 +412,11 @@
 								"type": "address"
 							},
 							{
+								"internalType": "address",
+								"name": "representative",
+								"type": "address"
+							},
+							{
 								"internalType": "uint256",
 								"name": "nftId",
 								"type": "uint256"
@@ -507,11 +512,72 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "",
+						"name": "caseId",
 						"type": "uint256"
 					}
 				],
 				"name": "cases",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "id",
+								"type": "uint256"
+							},
+							{
+								"internalType": "address",
+								"name": "member",
+								"type": "address"
+							},
+							{
+								"internalType": "address",
+								"name": "lawyer",
+								"type": "address"
+							},
+							{
+								"internalType": "string",
+								"name": "description",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "creationDate",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "resolutionDate",
+								"type": "uint256"
+							},
+							{
+								"internalType": "bool",
+								"name": "resolved",
+								"type": "bool"
+							},
+							{
+								"internalType": "uint256",
+								"name": "rewardAmount",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct PadiTypes.Case",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "casesMap",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -649,7 +715,7 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "",
+						"name": "lawyer",
 						"type": "address"
 					}
 				],
@@ -672,6 +738,25 @@
 						"type": "address"
 					}
 				],
+				"name": "isLawyerMap",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "member",
+						"type": "address"
+					}
+				],
 				"name": "isMember",
 				"outputs": [
 					{
@@ -691,7 +776,77 @@
 						"type": "address"
 					}
 				],
+				"name": "isMemberMap",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					}
+				],
 				"name": "lawyers",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "wallet",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256[]",
+								"name": "caseIds",
+								"type": "uint256[]"
+							},
+							{
+								"internalType": "string",
+								"name": "profileURI",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "joinDate",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "totalRewards",
+								"type": "uint256"
+							},
+							{
+								"internalType": "bool",
+								"name": "active",
+								"type": "bool"
+							}
+						],
+						"internalType": "struct PadiTypes.Lawyer",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "lawyersMap",
 				"outputs": [
 					{
 						"internalType": "address",
@@ -726,15 +881,76 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "",
+						"name": "memberId",
 						"type": "address"
 					}
 				],
 				"name": "members",
 				"outputs": [
 					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "wallet",
+								"type": "address"
+							},
+							{
+								"internalType": "address",
+								"name": "representative",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256",
+								"name": "nftId",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "metadataURI",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "joinDate",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "totalCases",
+								"type": "uint256"
+							},
+							{
+								"internalType": "bool",
+								"name": "active",
+								"type": "bool"
+							}
+						],
+						"internalType": "struct PadiTypes.Member",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "membersMap",
+				"outputs": [
+					{
 						"internalType": "address",
 						"name": "wallet",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "representative",
 						"type": "address"
 					},
 					{
@@ -1256,20 +1472,28 @@
 				"dweb:/ipfs/QmVUSvooZKEdEdap619tcJjTLcAuH6QBdZqAzWwnAXZAWJ"
 			]
 		},
-		"contracts/PadiStorage.sol": {
-			"keccak256": "0xc2ceacc0154444ff160324388017e4a147642e76652ca714db148c15ad1e2954",
+		"contracts/IPadiStorage.sol": {
+			"keccak256": "0x2101c0aefb1452b575ef8cab70eafd0485b9633b7fc53c86dbefb4378e98ed37",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b762a835d9189f355f5417eeeffefbbd6b556ec1e7715cf4a5bd4fd64ff475b0",
-				"dweb:/ipfs/QmNpcAVGF88ZKUNGc585NaskBWYercmnSMi3cdbapX8wjq"
+				"bzz-raw://b0c7a2eec9db39fef00f5c7eddd67e45a5b5b9812dadf2ecdb530d05fb694b57",
+				"dweb:/ipfs/QmaT8zqHPtaBEhy4cTqVkdVhqvd2m6iwKcQP5yo8HMUkNN"
+			]
+		},
+		"contracts/PadiStorage.sol": {
+			"keccak256": "0xd1bbf89b4fb138edb3800cd698901ce22b0c4f16ffe882b3c7aa445dd7a8927b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://3c23e3f517fe0bf816183aa85b20f39c94682383372c9a88f7302680814778ed",
+				"dweb:/ipfs/QmSQpw4rXZSbtX4SPAbkwDRhX6Vmqj5Y8dCuGxjcvgFQgk"
 			]
 		},
 		"contracts/PadiTypes.sol": {
-			"keccak256": "0xd1e98d556b102b46b9f5eb715e0cc85c47dd0adf5b213d71fb12a5c6e1fb368b",
+			"keccak256": "0x3ce7c3d93ed8248c495c2cf508f91fbf1dae81f50a1d8fd5ac81649e31b5fb8d",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://9b11cf0fe9821f142674d1dc9d32d7b3a1dd1c69ca56b0f90281b76df942b035",
-				"dweb:/ipfs/QmRghABHrJU78h2sqgrctRDqz4RiRims3J6DXZbYFt5fc4"
+				"bzz-raw://a16c79bc32cfe70d825e4c088cb0874f9a64aa116fad2a1e827cc2c40062d3b6",
+				"dweb:/ipfs/QmdMfhbL8vNi7PPqEePSfg1erz9kd4SjYBCCNnREMGVnEG"
 			]
 		}
 	},

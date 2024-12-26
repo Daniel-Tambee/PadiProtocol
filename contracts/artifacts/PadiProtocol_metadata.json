@@ -193,14 +193,19 @@
 						"type": "address"
 					},
 					{
-						"internalType": "uint256",
-						"name": "caseId",
-						"type": "uint256"
-					},
-					{
 						"internalType": "address",
 						"name": "memberAddress",
 						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "description",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "rewardAmount",
+						"type": "uint256"
 					}
 				],
 				"name": "addCase",
@@ -265,7 +270,7 @@
 						"type": "uint256[]"
 					}
 				],
-				"stateMutability": "view",
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -510,9 +515,8 @@
 			},
 			"kind": "dev",
 			"methods": {
-				"addCase(address,uint256,address)": {
+				"addCase(address,address,string,uint256)": {
 					"params": {
-						"caseId": "A unique identifier for the case.",
 						"lawyerAddress": "The address of the lawyer handling the case.",
 						"memberAddress": "The address of the member involved in the case."
 					}
@@ -629,7 +633,7 @@
 			},
 			"kind": "user",
 			"methods": {
-				"addCase(address,uint256,address)": {
+				"addCase(address,address,string,uint256)": {
 					"notice": "Track a new case for a lawyer."
 				},
 				"assignRepresentative(address,address)": {
@@ -809,43 +813,43 @@
 			]
 		},
 		"contracts/IPadiProtocol.sol": {
-			"keccak256": "0x3093698155a622326df2c130475b6fbb81266efadef01f68df130accfae9fc2c",
+			"keccak256": "0x3a09ba983603b67e05f296b53d285365f22fcf57c3abc2438e130a88a2c2d213",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://4ceae5f6a5e1eedaae252c6f65157291459b84d2e5596627cca9f29bb3709e8c",
-				"dweb:/ipfs/QmZfYSyrnWZEqoqarDWV4rNexk4fcsCnYT8BBmeyKB2K3a"
+				"bzz-raw://56513830611a3f734db8348a52e4736875fdcf3d380e739b160ae5c6a3deb859",
+				"dweb:/ipfs/QmPQe494KLqs4jX68BLJYEmU3c6K59x1UjJf7naLMk1GRc"
 			]
 		},
 		"contracts/IPadiStorage.sol": {
-			"keccak256": "0x82d13131607c8fb1c5e616d57dbcc7c3c7f821087d995762c0eeada453600230",
+			"keccak256": "0x2101c0aefb1452b575ef8cab70eafd0485b9633b7fc53c86dbefb4378e98ed37",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b2abc21b18ecfa013c82dcb4bcc662b5dd819eaf58ef32fdcac0e5aed24834e1",
-				"dweb:/ipfs/QmXRtmuXj8GJptepMLCPqk5JaSA73fpM9T3UVrXtQGu13n"
+				"bzz-raw://b0c7a2eec9db39fef00f5c7eddd67e45a5b5b9812dadf2ecdb530d05fb694b57",
+				"dweb:/ipfs/QmaT8zqHPtaBEhy4cTqVkdVhqvd2m6iwKcQP5yo8HMUkNN"
 			]
 		},
 		"contracts/PadiProtocol.sol": {
-			"keccak256": "0xbaa81a161f4ee3d4cb8eb8002fa2d1ed139a68a700197fed2379478112e5ec13",
+			"keccak256": "0x255d04e7170936fc5c5da67a2a9df8c25252e3332635a356a561a2b60f025025",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://eb24bca0a692731fda75cde0bee33c0e5562f134affffe943ac4d3862fa48ff5",
-				"dweb:/ipfs/QmTMFSENNpxfEqJ7fKm6Kg7GhubhmAQUBoMRi1nMCsGBts"
+				"bzz-raw://5a071319bf17997b8567fccb5c7067936948c82a2b312c09500a162a088c1a43",
+				"dweb:/ipfs/QmXHNgJELbdg6pSXowGCCxuSEEQ7X9yaxeTqVTUgbEVcKe"
 			]
 		},
 		"contracts/PadiStorage.sol": {
-			"keccak256": "0xc2ceacc0154444ff160324388017e4a147642e76652ca714db148c15ad1e2954",
+			"keccak256": "0x04f14f25915353ec7e606bb411a884a369083d9a816afbc37ac60f64706a7605",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b762a835d9189f355f5417eeeffefbbd6b556ec1e7715cf4a5bd4fd64ff475b0",
-				"dweb:/ipfs/QmNpcAVGF88ZKUNGc585NaskBWYercmnSMi3cdbapX8wjq"
+				"bzz-raw://1ea7f672f8f25794bb4de4bcf3ec6a11974d4902eae2a400cf5653ffb068f36e",
+				"dweb:/ipfs/QmUcrQCTN5bYvpy5r6bLneCXyBa1GcKcnfsjj4GaB5esUs"
 			]
 		},
 		"contracts/PadiTypes.sol": {
-			"keccak256": "0xd1e98d556b102b46b9f5eb715e0cc85c47dd0adf5b213d71fb12a5c6e1fb368b",
+			"keccak256": "0x3ce7c3d93ed8248c495c2cf508f91fbf1dae81f50a1d8fd5ac81649e31b5fb8d",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://9b11cf0fe9821f142674d1dc9d32d7b3a1dd1c69ca56b0f90281b76df942b035",
-				"dweb:/ipfs/QmRghABHrJU78h2sqgrctRDqz4RiRims3J6DXZbYFt5fc4"
+				"bzz-raw://a16c79bc32cfe70d825e4c088cb0874f9a64aa116fad2a1e827cc2c40062d3b6",
+				"dweb:/ipfs/QmdMfhbL8vNi7PPqEePSfg1erz9kd4SjYBCCNnREMGVnEG"
 			]
 		}
 	},

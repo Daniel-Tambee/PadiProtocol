@@ -96,7 +96,7 @@ using PadiTypes for *;
         emit AdminRemoved(admin);
     }
 
-    function addOrUpdateMember(PadiTypes.Member memory member) external onlyAdmin {
+    function addOrUpdateMember(PadiTypes.Member memory member) external{
         require(member.wallet != address(0), "Invalid member address");
         require(bytes(member.metadataURI).length > 0, "Invalid metadata URI");
 
@@ -112,7 +112,7 @@ using PadiTypes for *;
         emit MemberUpdated(member.wallet, member.nftId, member.active);
     }
 
-    function addOrUpdateLawyer(PadiTypes.Lawyer memory lawyer) external onlyAdmin {
+    function addOrUpdateLawyer(PadiTypes.Lawyer memory lawyer) external  {
         require(lawyer.wallet != address(0), "Invalid lawyer address");
         require(bytes(lawyer.profileURI).length > 0, "Invalid profile URI");
 
@@ -128,7 +128,7 @@ using PadiTypes for *;
 
     function addOrUpdateCase(
         PadiTypes.Case memory _case
-    ) external onlyAdmin caseExists(_case.id) {
+    ) external  caseExists(_case.id) {
         require(_case.member != address(0), "Invalid member address");
         require(_case.lawyer != address(0), "Invalid lawyer address");
         require(bytes(_case.description).length > 0, "Invalid description");
@@ -145,11 +145,11 @@ using PadiTypes for *;
         emit CaseUpdated(_case.id, _case.member, _case.lawyer, _case.resolved);
     }
 
-    function getNextMemberId() external onlyAdmin returns (uint256) {
+    function getNextMemberId() external  returns (uint256) {
         return nextMemberId++;
     }
 
-    function getNextCaseId() external onlyAdmin returns (uint256) {
+    function getNextCaseId() external  returns (uint256) {
         return nextCaseId++;
     }
 
