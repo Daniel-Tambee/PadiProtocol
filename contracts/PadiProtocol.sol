@@ -139,7 +139,7 @@ function confirmEmergencyResponse(
     emit LawyerRewarded(lawyerAddress, caseId, rewardAmount);
 }
 
-    function signUpLawyer(address lawyerAddress) external override {
+    function signUpLawyer(address lawyerAddress, string calldata profileUri) external override {
     require(lawyerAddress != address(0), "Invalid address");
     require(!storageContract.isLawyer(lawyerAddress), "Lawyer is already registered");
 
@@ -147,7 +147,7 @@ function confirmEmergencyResponse(
     PadiTypes.Lawyer memory newLawyer = PadiTypes.Lawyer({
         wallet: lawyerAddress,
         caseIds: new uint256[](0), 
-        profileURI: "", // Profile URI can be added later
+        profileURI: profileUri, // Profile URI can be added later
         joinDate: block.timestamp, // Set the join date to the current block timestamp
         totalRewards: 0, // No rewards initially
         active: true // The lawyer is active upon registration

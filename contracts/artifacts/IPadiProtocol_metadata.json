@@ -410,6 +410,11 @@
 						"internalType": "address",
 						"name": "lawyerAddress",
 						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "profileUri",
+						"type": "string"
 					}
 				],
 				"name": "signUpLawyer",
@@ -554,7 +559,7 @@
 						"tokenAddress": "The address of the token contract."
 					}
 				},
-				"signUpLawyer(address)": {
+				"signUpLawyer(address,string)": {
 					"params": {
 						"lawyerAddress": "The address of the lawyer signing up."
 					}
@@ -627,7 +632,7 @@
 				"setPaymentToken(address)": {
 					"notice": "Set the token contract address used for payments."
 				},
-				"signUpLawyer(address)": {
+				"signUpLawyer(address,string)": {
 					"notice": "Sign up a lawyer as a legal representative."
 				}
 			},
@@ -651,11 +656,11 @@
 	},
 	"sources": {
 		"contracts/IPadiProtocol.sol": {
-			"keccak256": "0x3a09ba983603b67e05f296b53d285365f22fcf57c3abc2438e130a88a2c2d213",
+			"keccak256": "0x0de16bb23d24e1c8b850759eccc858d4e63ce2647ea05f212ee6c21e5170b774",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://56513830611a3f734db8348a52e4736875fdcf3d380e739b160ae5c6a3deb859",
-				"dweb:/ipfs/QmPQe494KLqs4jX68BLJYEmU3c6K59x1UjJf7naLMk1GRc"
+				"bzz-raw://3615735c7ab3dd81bf46a60d4a3160baa78eea0ce73614c56e58890e28ab403e",
+				"dweb:/ipfs/QmfWENNBMHcKhe5sb7mA7PA2PAPBNdfbaArYbWsrvu1CJS"
 			]
 		}
 	},

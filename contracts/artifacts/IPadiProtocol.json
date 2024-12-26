@@ -61,7 +61,7 @@
 			"resolveCase(address,uint256)": "49678605",
 			"rewardLawyerForEmergency(address,uint256,uint256)": "aa9aa17a",
 			"setPaymentToken(address)": "6a326ab1",
-			"signUpLawyer(address)": "70ef2e2d"
+			"signUpLawyer(address,string)": "4b870a83"
 		}
 	},
 	"abi": [
@@ -470,6 +470,11 @@
 					"internalType": "address",
 					"name": "lawyerAddress",
 					"type": "address"
+				},
+				{
+					"internalType": "string",
+					"name": "profileUri",
+					"type": "string"
 				}
 			],
 			"name": "signUpLawyer",

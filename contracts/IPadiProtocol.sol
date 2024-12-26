@@ -52,7 +52,7 @@ interface IPadiProtocol {
      * @notice Sign up a lawyer as a legal representative.
      * @param lawyerAddress The address of the lawyer signing up.
      */
-    function signUpLawyer(address lawyerAddress) external;
+    function signUpLawyer(address lawyerAddress,string calldata profileUri) external;
 
     /**
      * @notice Track a new case for a lawyer.
