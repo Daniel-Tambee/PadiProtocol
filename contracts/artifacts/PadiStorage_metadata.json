@@ -1481,11 +1481,11 @@
 			]
 		},
 		"contracts/PadiStorage.sol": {
-			"keccak256": "0xd1bbf89b4fb138edb3800cd698901ce22b0c4f16ffe882b3c7aa445dd7a8927b",
+			"keccak256": "0xf7c3b7a689348b86d757413df4f875032e5b0f61f2577f61e784c9f6a65e85aa",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://3c23e3f517fe0bf816183aa85b20f39c94682383372c9a88f7302680814778ed",
-				"dweb:/ipfs/QmSQpw4rXZSbtX4SPAbkwDRhX6Vmqj5Y8dCuGxjcvgFQgk"
+				"bzz-raw://c09a43c5b1de8f10ab91679cd039a25f5cd3794ca22676ea959978fbabdaf710",
+				"dweb:/ipfs/QmUcGAMyxKD1Z2SsA3fnhADrmvLcGwG47LfPiV7tZqsBsD"
 			]
 		},
 		"contracts/PadiTypes.sol": {

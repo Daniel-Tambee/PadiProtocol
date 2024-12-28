@@ -49,7 +49,7 @@ contract PadiProtocol is IPadiProtocol {
 
         PadiTypes.Member memory newMember = PadiTypes.Member({
             wallet: memberAddress,
-            nftId: storageContract.getNextMemberId(), // Assign appropriate value
+            nftId: storageContract.getNextMemberId() == 0 ? 1 : storageContract.getNextMemberId(), // Assign appropriate value
             metadataURI: metadataURI,
             joinDate: block.timestamp,
             totalCases: 0,
@@ -165,7 +165,7 @@ function confirmEmergencyResponse(
     function addCase(
     address lawyerAddress,
     address memberAddress,
-    string calldata description, // Added description parameter
+    string calldata descriptionMetadata, // Added descriptionMetadata parameter
     uint256 rewardAmount // Added rewardAmount parameter
 ) external override {
     require(lawyerAddress != address(0), "Invalid lawyer address");
@@ -173,14 +173,13 @@ function confirmEmergencyResponse(
     require(storageContract.isLawyer(lawyerAddress), "Lawyer is not registered");
     require(storageContract.isMember(memberAddress), "Member is not registered");
 
-    uint256 creationDate = block.timestamp; // Set the case creation date to the current block timestamp
 
     PadiTypes.Case memory newCase = PadiTypes.Case({
-        id: storageContract.getNextCaseId(),
+        id: storageContract.getNextCaseId() == 0 ? 1 : storageContract.getNextCaseId(),
         member: memberAddress,
         lawyer: lawyerAddress,
-        description: description, // Set the description from input
-        creationDate: creationDate, // Set the creation date
+        descriptionMetadata: descriptionMetadata, // Set the descriptionMetadata from input
+        creationDate: block.timestamp, // Set the creation date
         resolutionDate: 0, // Set resolution date to 0 initially
         resolved: false, // Set resolved to false initially
         rewardAmount: rewardAmount // Set the reward amount for the case

@@ -26,7 +26,7 @@ library PadiTypes {
         uint256 id;
         address member;
         address lawyer;
-        string description;
+        string descriptionMetadata;
         uint256 creationDate;
         uint256 resolutionDate;
         bool resolved;

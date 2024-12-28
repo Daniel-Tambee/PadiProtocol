@@ -84,7 +84,9 @@ using PadiTypes for *;
     function cases(uint256 caseId) external view returns (PadiTypes.Case memory) {
         require(casesMap[caseId].member != address(0), "Case ID does not exist");
         return casesMap[caseId];
-    }    function addAdmin(address admin) external onlyOwner {
+    }   
+    
+     function addAdmin(address admin) external onlyOwner {
         require(admin != address(0), "Invalid admin address");
         admins[admin] = true;
         emit AdminAdded(admin);
@@ -128,10 +130,10 @@ using PadiTypes for *;
 
     function addOrUpdateCase(
         PadiTypes.Case memory _case
-    ) external  caseExists(_case.id) {
+    ) external  {
         require(_case.member != address(0), "Invalid member address");
         require(_case.lawyer != address(0), "Invalid lawyer address");
-        require(bytes(_case.description).length > 0, "Invalid description");
+        require(bytes(_case.descriptionMetadata).length > 0, "Invalid description");
         require(isMemberMap[_case.member], "Member not registered");
         require(isLawyerMap[_case.lawyer], "Lawyer not registered");
 

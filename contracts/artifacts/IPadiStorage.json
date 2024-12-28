@@ -51,11 +51,13 @@
 		"methodIdentifiers": {
 			"addOrUpdateCase((uint256,address,address,string,uint256,uint256,bool,uint256))": "f47be477",
 			"addOrUpdateLawyer((address,uint256[],string,uint256,uint256,bool))": "84500001",
-			"addOrUpdateMember((address,uint256,string,uint256,uint256,bool))": "57010473",
-			"cases(address)": "2dfe4226",
+			"addOrUpdateMember((address,address,uint256,string,uint256,uint256,bool))": "af947d05",
+			"cases(uint256)": "f09790dd",
 			"getLawyerCases(address)": "8bfeffe5",
 			"getNextCaseId()": "5e88b1e2",
 			"getNextMemberId()": "cb37be9e",
+			"isLawyer(address)": "5939a84e",
+			"isMember(address)": "a230c524",
 			"lawyers(address)": "554ae567",
 			"members(address)": "08ae4b0c"
 		}
@@ -183,7 +185,7 @@
 						},
 						{
 							"internalType": "string",
-							"name": "description",
+							"name": "descriptionMetadata",
 							"type": "string"
 						},
 						{
@@ -272,6 +274,11 @@
 							"type": "address"
 						},
 						{
+							"internalType": "address",
+							"name": "representative",
+							"type": "address"
+						},
+						{
 							"internalType": "uint256",
 							"name": "nftId",
 							"type": "uint256"
@@ -310,9 +317,9 @@
 		{
 			"inputs": [
 				{
-					"internalType": "address",
+					"internalType": "uint256",
 					"name": "caseId",
-					"type": "address"
+					"type": "uint256"
 				}
 			],
 			"name": "cases",
@@ -336,7 +343,7 @@
 						},
 						{
 							"internalType": "string",
-							"name": "description",
+							"name": "descriptionMetadata",
 							"type": "string"
 						},
 						{
@@ -417,6 +424,44 @@
 			"inputs": [
 				{
 					"internalType": "address",
+					"name": "",
+					"type": "address"
+				}
+			],
+			"name": "isLawyer",
+			"outputs": [
+				{
+					"internalType": "bool",
+					"name": "",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "",
+					"type": "address"
+				}
+			],
+			"name": "isMember",
+			"outputs": [
+				{
+					"internalType": "bool",
+					"name": "",
+					"type": "bool"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
 					"name": "lawyerAddress",
 					"type": "address"
 				}
@@ -479,6 +524,11 @@
 						{
 							"internalType": "address",
 							"name": "wallet",
+							"type": "address"
+						},
+						{
+							"internalType": "address",
+							"name": "representative",
 							"type": "address"
 						},
 						{

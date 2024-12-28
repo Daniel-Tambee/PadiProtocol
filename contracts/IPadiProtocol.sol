@@ -62,7 +62,7 @@ interface IPadiProtocol {
     function addCase(
        address lawyerAddress,
     address memberAddress,
-    string calldata description, // Added description parameter
+    string calldata descriptionMetadata, // Added descriptionMetadata parameter
     uint256 rewardAmount
     ) external;
 

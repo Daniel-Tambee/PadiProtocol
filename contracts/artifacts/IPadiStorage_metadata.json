@@ -127,7 +127,7 @@
 							},
 							{
 								"internalType": "string",
-								"name": "description",
+								"name": "descriptionMetadata",
 								"type": "string"
 							},
 							{
@@ -216,6 +216,11 @@
 								"type": "address"
 							},
 							{
+								"internalType": "address",
+								"name": "representative",
+								"type": "address"
+							},
+							{
 								"internalType": "uint256",
 								"name": "nftId",
 								"type": "uint256"
@@ -254,9 +259,9 @@
 			{
 				"inputs": [
 					{
-						"internalType": "address",
+						"internalType": "uint256",
 						"name": "caseId",
-						"type": "address"
+						"type": "uint256"
 					}
 				],
 				"name": "cases",
@@ -280,7 +285,7 @@
 							},
 							{
 								"internalType": "string",
-								"name": "description",
+								"name": "descriptionMetadata",
 								"type": "string"
 							},
 							{
@@ -361,6 +366,44 @@
 				"inputs": [
 					{
 						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "isLawyer",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "isMember",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
 						"name": "lawyerAddress",
 						"type": "address"
 					}
@@ -426,6 +469,11 @@
 								"type": "address"
 							},
 							{
+								"internalType": "address",
+								"name": "representative",
+								"type": "address"
+							},
+							{
 								"internalType": "uint256",
 								"name": "nftId",
 								"type": "uint256"
@@ -488,19 +536,19 @@
 	},
 	"sources": {
 		"contracts/IPadiStorage.sol": {
-			"keccak256": "0x9f3cee5fa90265874f4120c784611bd1f0642efdd990c8d3ec567170f04de7e5",
+			"keccak256": "0x2101c0aefb1452b575ef8cab70eafd0485b9633b7fc53c86dbefb4378e98ed37",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://800c757b0ea69beb9f57f25b5aed603776251b16a74768e0638d9dd039a0207c",
-				"dweb:/ipfs/QmWRU7BuPEsJrpouBbZZUX3rPuGCW7QhsBdWSJiSfqMArE"
+				"bzz-raw://b0c7a2eec9db39fef00f5c7eddd67e45a5b5b9812dadf2ecdb530d05fb694b57",
+				"dweb:/ipfs/QmaT8zqHPtaBEhy4cTqVkdVhqvd2m6iwKcQP5yo8HMUkNN"
 			]
 		},
 		"contracts/PadiTypes.sol": {
-			"keccak256": "0xd1e98d556b102b46b9f5eb715e0cc85c47dd0adf5b213d71fb12a5c6e1fb368b",
+			"keccak256": "0x23ea2cbd0baf6b61e7df727d61d6347dab542c494d86b2924b3d677b3f5478d7",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://9b11cf0fe9821f142674d1dc9d32d7b3a1dd1c69ca56b0f90281b76df942b035",
-				"dweb:/ipfs/QmRghABHrJU78h2sqgrctRDqz4RiRims3J6DXZbYFt5fc4"
+				"bzz-raw://bc6537a9455ceea243582a7bbd469bc2aa8a0e7da88635481a5fcb6f84bf6395",
+				"dweb:/ipfs/QmdRRBuHxaakpUWz4Juep8RvGH2Xff9heBoar89d7x4hvA"
 			]
 		}
 	},
