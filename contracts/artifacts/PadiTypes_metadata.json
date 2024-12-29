@@ -33,11 +33,11 @@
 	},
 	"sources": {
 		"contracts/PadiTypes.sol": {
-			"keccak256": "0x23ea2cbd0baf6b61e7df727d61d6347dab542c494d86b2924b3d677b3f5478d7",
+			"keccak256": "0x6d8e857f5cdd467a484dc2c352ed20482904ff4c6dd5f9626fd8f2603c71b226",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://bc6537a9455ceea243582a7bbd469bc2aa8a0e7da88635481a5fcb6f84bf6395",
-				"dweb:/ipfs/QmdRRBuHxaakpUWz4Juep8RvGH2Xff9heBoar89d7x4hvA"
+				"bzz-raw://9f461fcd444fd8e8d51f56d4dad9394a7ab12a897e24a10f2b4370218613970e",
+				"dweb:/ipfs/QmRXr6ZbhzMGV7pScvdiGYAefhZTjgCyDK7LJLnmT3YQhM"
 			]
 		}
 	},

@@ -11,6 +11,8 @@ function isMember(address) external view returns (bool);
     // Function signatures
     function addOrUpdateMember(PadiTypes.Member calldata member) external;
 
+    function initializePadiContract(address padiContractAddress) external;
+
     function addOrUpdateLawyer(PadiTypes.Lawyer calldata lawyer) external;
 
     function addOrUpdateCase(PadiTypes.Case calldata _case) external;

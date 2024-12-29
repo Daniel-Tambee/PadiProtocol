@@ -56,6 +56,7 @@
 			"getLawyerCases(address)": "8bfeffe5",
 			"getNextCaseId()": "5e88b1e2",
 			"getNextMemberId()": "cb37be9e",
+			"initializePadiContract(address)": "a2ac1764",
 			"isLawyer(address)": "5939a84e",
 			"isMember(address)": "a230c524",
 			"lawyers(address)": "554ae567",
@@ -417,6 +418,19 @@
 					"type": "uint256"
 				}
 			],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "padiContractAddress",
+					"type": "address"
+				}
+			],
+			"name": "initializePadiContract",
+			"outputs": [],
 			"stateMutability": "nonpayable",
 			"type": "function"
 		},

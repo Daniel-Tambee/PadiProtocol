@@ -2,7 +2,6 @@
 pragma solidity ^0.8.0;
 
 library PadiTypes {
-    enum Status {item1, item2 }
     struct Member {
         address wallet;
         address representative;     // Legal representative's address

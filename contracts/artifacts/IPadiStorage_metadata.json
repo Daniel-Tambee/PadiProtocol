@@ -366,6 +366,19 @@
 				"inputs": [
 					{
 						"internalType": "address",
+						"name": "padiContractAddress",
+						"type": "address"
+					}
+				],
+				"name": "initializePadiContract",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
 						"name": "",
 						"type": "address"
 					}
@@ -536,19 +549,19 @@
 	},
 	"sources": {
 		"contracts/IPadiStorage.sol": {
-			"keccak256": "0x2101c0aefb1452b575ef8cab70eafd0485b9633b7fc53c86dbefb4378e98ed37",
+			"keccak256": "0x251f800c11555d299ae13f4818b93ec5ee0029a56611f0cb3aa0f281cf2ceb78",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b0c7a2eec9db39fef00f5c7eddd67e45a5b5b9812dadf2ecdb530d05fb694b57",
-				"dweb:/ipfs/QmaT8zqHPtaBEhy4cTqVkdVhqvd2m6iwKcQP5yo8HMUkNN"
+				"bzz-raw://26b20e895a7f22560857067bbfa1281efd750097edf4315383e013fc5d8918b2",
+				"dweb:/ipfs/QmbE9pHJig2JHPZDLN91QVTMS9NnY9Anj4AQoGozvE4dMX"
 			]
 		},
 		"contracts/PadiTypes.sol": {
-			"keccak256": "0x23ea2cbd0baf6b61e7df727d61d6347dab542c494d86b2924b3d677b3f5478d7",
+			"keccak256": "0x6d8e857f5cdd467a484dc2c352ed20482904ff4c6dd5f9626fd8f2603c71b226",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://bc6537a9455ceea243582a7bbd469bc2aa8a0e7da88635481a5fcb6f84bf6395",
-				"dweb:/ipfs/QmdRRBuHxaakpUWz4Juep8RvGH2Xff9heBoar89d7x4hvA"
+				"bzz-raw://9f461fcd444fd8e8d51f56d4dad9394a7ab12a897e24a10f2b4370218613970e",
+				"dweb:/ipfs/QmRXr6ZbhzMGV7pScvdiGYAefhZTjgCyDK7LJLnmT3YQhM"
 			]
 		}
 	},

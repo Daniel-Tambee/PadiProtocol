@@ -115,11 +115,7 @@ interface IPadiProtocol {
      */
     function setPaymentToken(address tokenAddress) external;
 
-    /**
-     * @notice Get the current token contract address used for payments.
-     * @return tokenAddress The address of the token contract.
-     */
-    function getPaymentToken() external view returns (address tokenAddress);
+
 
     /**
      * @notice Event emitted when a membership NFT is minted.

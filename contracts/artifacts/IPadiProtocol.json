@@ -53,7 +53,6 @@
 			"assignRepresentative(address,address)": "4158c1b5",
 			"confirmEmergencyResponse(address,uint256,address)": "241f8715",
 			"getOpenCases(address)": "e1a9abf1",
-			"getPaymentToken()": "d41c3a65",
 			"getRepresentative(address)": "edd501fa",
 			"isLawyer(address)": "5939a84e",
 			"isMember(address)": "a230c524",
@@ -315,19 +314,6 @@
 				}
 			],
 			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
-			"inputs": [],
-			"name": "getPaymentToken",
-			"outputs": [
-				{
-					"internalType": "address",
-					"name": "tokenAddress",
-					"type": "address"
-				}
-			],
-			"stateMutability": "view",
 			"type": "function"
 		},
 		{

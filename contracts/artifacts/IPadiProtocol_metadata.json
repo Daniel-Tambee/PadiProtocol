@@ -258,19 +258,6 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "getPaymentToken",
-				"outputs": [
-					{
-						"internalType": "address",
-						"name": "tokenAddress",
-						"type": "address"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
 				"inputs": [
 					{
 						"internalType": "address",
@@ -505,11 +492,6 @@
 						"caseIds": "An array of unique identifiers for open cases."
 					}
 				},
-				"getPaymentToken()": {
-					"returns": {
-						"tokenAddress": "The address of the token contract."
-					}
-				},
 				"getRepresentative(address)": {
 					"params": {
 						"memberAddress": "The address of the member."
@@ -608,9 +590,6 @@
 				"getOpenCases(address)": {
 					"notice": "Get the list of open cases for a lawyer."
 				},
-				"getPaymentToken()": {
-					"notice": "Get the current token contract address used for payments."
-				},
 				"getRepresentative(address)": {
 					"notice": "Get the legal representative of a member."
 				},
@@ -656,11 +635,11 @@
 	},
 	"sources": {
 		"contracts/IPadiProtocol.sol": {
-			"keccak256": "0xf959a5bd1d19659d7cd6b7bed63bd9b6e04409c24329c561f59dba2f5fe981b5",
+			"keccak256": "0xfc1f991c069de8144118f01347cc246cf7afbec079607595eed371cd39e478d9",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://f376f5a2319793b3008edf62b5222a4db96c6c527f8ec66ed2e91c166d3e0643",
-				"dweb:/ipfs/QmdqPZs5xDdeytnCd6AKwp4A9QEND4aVMdgJ8v2iRKoDqd"
+				"bzz-raw://2742293b6f76fe1774856f0b90b01684d00945aebe47598c4a25fd6a34b0e0b1",
+				"dweb:/ipfs/QmSp71SMGBWWVdrfvQqAi9GnpUpu9QNRgMt4Yjpo2tkJrX"
 			]
 		}
 	},

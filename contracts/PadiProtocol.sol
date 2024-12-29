@@ -12,16 +12,20 @@ contract PadiProtocol is IPadiProtocol {
 
     IPadiStorage public storageContract;
     IERC20 public paymentToken;
+    address public padiWallet;
 
-    constructor(address _storageContract, address _paymentToken) {
+    
+    constructor(address _storageContract, address _paymentToken, address _paditrust) {
         require(
             _storageContract != address(0),
             "Invalid storage contract address"
         );
         require(_paymentToken != address(0), "Invalid payment token address");
+        require(_paditrust != address(0), "Invalid payment token address");
 
         storageContract = IPadiStorage(_storageContract);
         paymentToken = IERC20(_paymentToken);
+        padiWallet = _paditrust;
     }
 
     function mintMembershipNFT(
@@ -42,7 +46,7 @@ contract PadiProtocol is IPadiProtocol {
         // Transfer the payment tokens from the sender to the contract
         bool success = paymentToken.transferFrom(
             msg.sender,
-            address(this),
+            padiWallet,
             paymentAmount
         );
         require(success, "Token transfer failed");
@@ -267,7 +271,5 @@ function confirmEmergencyResponse(
 }
 
 
-    function getPaymentToken() external view override returns (address) {
-        return address(paymentToken);
-    }
+    
 }

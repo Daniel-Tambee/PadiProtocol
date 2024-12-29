@@ -5,14 +5,15 @@ import "contracts/PadiTypes.sol";
 import "contracts/IPadiStorage.sol";
 
 
+
 /// @title Padi Storage Contract
 /// @notice Handles storage for members, lawyers, and cases in the Padi Protocol
 /// @dev Added access control, input validation, and additional safety checks
-contract PadiStorage is ERC721 {
+contract PadiStorage is ERC721, IPadiStorage {
 using PadiTypes for *;
     address public owner;
     mapping(address => bool) public admins;
-
+    address public padiContract; 
    
 
     mapping(address => PadiTypes.Member) public membersMap;
@@ -24,22 +25,8 @@ using PadiTypes for *;
     uint256 public nextCaseId;
     uint256 public nextMemberId;
 
-    event MemberUpdated(address indexed member, uint256 nftId, bool active);
-    event LawyerUpdated(address indexed lawyer, bool active);
-    event CaseUpdated(
-        uint256 indexed caseId,
-        address member,
-        address lawyer,
-        bool resolved
-    );
-    event AdminAdded(address indexed admin);
-    event AdminRemoved(address indexed admin);
 
-    modifier onlyOwner() {
-        require(msg.sender == owner, "Only owner can call this function");
-        _;
-    }
-
+   
     modifier onlyAdmin() {
         require(
             admins[msg.sender] || msg.sender == owner,
@@ -48,8 +35,17 @@ using PadiTypes for *;
         _;
     }
 
+    modifier onlyOwner() {
+    require(msg.sender == owner, "Only owner can call this function");
+    _;
+    }
     modifier memberExists(address wallet) {
         require(isMemberMap[wallet], "Member does not exist");
+        _;
+    }
+
+    modifier padiContractInitialized {
+        require(padiContract != address(0), "PadiContract has not been intialized or is incorrect");
         _;
     }
 
@@ -66,22 +62,27 @@ using PadiTypes for *;
     constructor() ERC721("Padi Protocol NFT", "PADI") {
         owner = msg.sender;
         admins[msg.sender] = true;
+        padiContract = address(0);
     }
 
+    function initializePadiContract(address padiContractAddress) external onlyOwner {
+        require(padiContractAddress != address(0), "padiContractAddress should not be empty");
+        padiContract = padiContractAddress;
+    }
  // Fetch a member by their address
-    function members(address memberId) external view returns (PadiTypes.Member memory) {
+    function members(address memberId) external padiContractInitialized view returns (PadiTypes.Member memory) {
         require(isMemberMap[memberId], "Address is not a registered member");
         return membersMap[memberId];
     }
 
     // Fetch a lawyer by their address
-    function lawyers(address lawyerAddress) external view returns (PadiTypes.Lawyer memory) {
+    function lawyers(address lawyerAddress) external padiContractInitialized view returns (PadiTypes.Lawyer memory) {
         require(isLawyerMap[lawyerAddress], "Address is not a registered lawyer");
         return lawyersMap[lawyerAddress];
     }
 
     // Fetch a case by its ID
-    function cases(uint256 caseId) external view returns (PadiTypes.Case memory) {
+    function cases(uint256 caseId) external padiContractInitialized view returns (PadiTypes.Case memory) {
         require(casesMap[caseId].member != address(0), "Case ID does not exist");
         return casesMap[caseId];
     }   
@@ -98,7 +99,7 @@ using PadiTypes for *;
         emit AdminRemoved(admin);
     }
 
-    function addOrUpdateMember(PadiTypes.Member memory member) external{
+    function addOrUpdateMember(PadiTypes.Member memory member) external padiContractInitialized {
         require(member.wallet != address(0), "Invalid member address");
         require(bytes(member.metadataURI).length > 0, "Invalid metadata URI");
 
@@ -114,7 +115,7 @@ using PadiTypes for *;
         emit MemberUpdated(member.wallet, member.nftId, member.active);
     }
 
-    function addOrUpdateLawyer(PadiTypes.Lawyer memory lawyer) external  {
+    function addOrUpdateLawyer(PadiTypes.Lawyer memory lawyer) external padiContractInitialized {
         require(lawyer.wallet != address(0), "Invalid lawyer address");
         require(bytes(lawyer.profileURI).length > 0, "Invalid profile URI");
 
@@ -130,7 +131,7 @@ using PadiTypes for *;
 
     function addOrUpdateCase(
         PadiTypes.Case memory _case
-    ) external  {
+    ) external padiContractInitialized {
         require(_case.member != address(0), "Invalid member address");
         require(_case.lawyer != address(0), "Invalid lawyer address");
         require(bytes(_case.descriptionMetadata).length > 0, "Invalid description");
@@ -147,26 +148,26 @@ using PadiTypes for *;
         emit CaseUpdated(_case.id, _case.member, _case.lawyer, _case.resolved);
     }
 
-    function getNextMemberId() external  returns (uint256) {
+    function getNextMemberId() external padiContractInitialized returns (uint256) {
         return nextMemberId++;
     }
 
-    function getNextCaseId() external  returns (uint256) {
+    function getNextCaseId() external padiContractInitialized returns (uint256) {
         return nextCaseId++;
     }
 
     function getLawyerCases(
         address lawyer
-    ) external view returns (uint256[] memory) {
+    ) external padiContractInitialized view returns (uint256[] memory) {
         require(isLawyerMap[lawyer], "Lawyer not registered");
         return lawyersMap[lawyer].caseIds;
     }
-   function isMember(address member) external view returns (bool) {
+   function isMember(address member) external padiContractInitialized view returns (bool) {
         return isMemberMap[member];
     }
 
     // Manually implemented getter function for isLawyer
-    function isLawyer(address lawyer) external view returns (bool) {
+    function isLawyer(address lawyer) external padiContractInitialized view returns (bool) {
         return isLawyerMap[lawyer];
     }
 }
