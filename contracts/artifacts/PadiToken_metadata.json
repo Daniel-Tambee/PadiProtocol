@@ -147,19 +147,6 @@
 				"type": "event"
 			},
 			{
-				"inputs": [],
-				"name": "MAX_SUPPLY",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
 				"inputs": [
 					{
 						"internalType": "address",
@@ -492,11 +479,11 @@
 			]
 		},
 		"contracts/PadiToken.sol": {
-			"keccak256": "0x912368e60769b123f11c8ec2b107be45643fb69933e892cfae1cc0913964d508",
+			"keccak256": "0x7d84f762ba74eb48438d6d8a2b991fbd1566004c8a2aa4e2bd80eb85f9289e9c",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://5660448cc1b4e6cefdf82b9d35a16455aadbbab6f83ca939a419d472614fe300",
-				"dweb:/ipfs/QmNbu18m423bNmhBstztagyuG3fjC1s55hMfLKMc3mFiLP"
+				"bzz-raw://6a5af4cb31d2b88c8cf78c0ea875086b47b6f819c22e50782ce9ef8c8233d4d5",
+				"dweb:/ipfs/QmfY5kbPi9eTQ8qELrEoeuELNastsjHwbcXEuyu1EinyLn"
 			]
 		}
 	},

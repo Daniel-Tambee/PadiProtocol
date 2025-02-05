@@ -10,32 +10,6 @@
 				"inputs": [
 					{
 						"indexed": true,
-						"internalType": "address",
-						"name": "admin",
-						"type": "address"
-					}
-				],
-				"name": "AdminAdded",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "admin",
-						"type": "address"
-					}
-				],
-				"name": "AdminRemoved",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": true,
 						"internalType": "uint256",
 						"name": "caseId",
 						"type": "uint256"
@@ -329,7 +303,12 @@
 				"outputs": [
 					{
 						"internalType": "uint256[]",
-						"name": "",
+						"name": "open",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "closed",
 						"type": "uint256[]"
 					}
 				],
@@ -337,40 +316,14 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "getNextCaseId",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "getNextMemberId",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "padiContractAddress",
+						"name": "_padiProtocol",
 						"type": "address"
 					}
 				],
-				"name": "initializePadiContract",
+				"name": "initializeProtocol",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -379,7 +332,7 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "",
+						"name": "user",
 						"type": "address"
 					}
 				],
@@ -398,7 +351,7 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "",
+						"name": "user",
 						"type": "address"
 					}
 				],
@@ -468,7 +421,7 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "memberId",
+						"name": "memberAddress",
 						"type": "address"
 					}
 				],
@@ -519,6 +472,32 @@
 				],
 				"stateMutability": "view",
 				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "nextCaseId",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "nextMemberId",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
 			}
 		],
 		"devdoc": {
@@ -549,11 +528,11 @@
 	},
 	"sources": {
 		"contracts/IPadiStorage.sol": {
-			"keccak256": "0x251f800c11555d299ae13f4818b93ec5ee0029a56611f0cb3aa0f281cf2ceb78",
+			"keccak256": "0x1d762ff6472afab665a321ace5ced1ca0f5e94b2a2cdaf2c2e70b3fa48ecac02",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://26b20e895a7f22560857067bbfa1281efd750097edf4315383e013fc5d8918b2",
-				"dweb:/ipfs/QmbE9pHJig2JHPZDLN91QVTMS9NnY9Anj4AQoGozvE4dMX"
+				"bzz-raw://32e8a08ae11f38823faba9e51860e1ed62d17e5082b827be6e9847d0f25e647e",
+				"dweb:/ipfs/QmY6ep67CYj7RSL4xDWpmQed31N4mTHqBK1wVYjjYkXfQW"
 			]
 		},
 		"contracts/PadiTypes.sol": {

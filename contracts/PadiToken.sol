@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract PadiToken is ERC20 {
     // Define the maximum supply of 1 billion tokens (with 18 decimals)
-    uint256 public constant MAX_SUPPLY = 1_000_000_000 * 10 ** 18;
+    uint256 constant MAX_SUPPLY = 1_000_000_000 * 10 ** 18;
 
     constructor() ERC20("Padi Token", "PADI") {
         // Mint the maximum supply to the contract deployer's address

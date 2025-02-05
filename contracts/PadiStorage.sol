@@ -1,20 +1,16 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "contracts/PadiTypes.sol";
-import "contracts/IPadiStorage.sol";
 
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "./PadiTypes.sol";
+import "./IPadiStorage.sol";
 
+ contract PadiStorage is IPadiStorage, Ownable {
+    using PadiTypes for *;
 
-/// @title Padi Storage Contract
-/// @notice Handles storage for members, lawyers, and cases in the Padi Protocol
-/// @dev Added access control, input validation, and additional safety checks
-contract PadiStorage is ERC721, IPadiStorage {
-using PadiTypes for *;
-    address public owner;
-    mapping(address => bool) public admins;
-    address public padiContract; 
-   
+    address public padiProtocol;
+    uint256 public nextMemberId = 1;
+    uint256 public nextCaseId = 1;
 
     mapping(address => PadiTypes.Member) public membersMap;
     mapping(address => PadiTypes.Lawyer) public lawyersMap;
@@ -22,152 +18,121 @@ using PadiTypes for *;
     mapping(address => bool) public isMemberMap;
     mapping(address => bool) public isLawyerMap;
 
-    uint256 public nextCaseId;
-    uint256 public nextMemberId;
+    // Case tracking optimizations
+    mapping(address => uint256[]) private lawyerOpenCases;
+    mapping(address => uint256[]) private lawyerClosedCases;
 
-
-   
-    modifier onlyAdmin() {
-        require(
-            admins[msg.sender] || msg.sender == owner,
-            "Only admin can call this function"
-        );
+    modifier onlyPadiProtocol() {
+        require(msg.sender == padiProtocol, "Unauthorized access");
         _;
     }
 
-    modifier onlyOwner() {
-    require(msg.sender == owner, "Only owner can call this function");
-    _;
-    }
-    modifier memberExists(address wallet) {
-        require(isMemberMap[wallet], "Member does not exist");
-        _;
+    constructor()Ownable(msg.sender) {
     }
 
-    modifier padiContractInitialized {
-        require(padiContract != address(0), "PadiContract has not been intialized or is incorrect");
-        _;
+    function initializeProtocol(address _padiProtocol) external onlyOwner {
+        require(_padiProtocol != address(0), "Invalid protocol address");
+        padiProtocol = _padiProtocol;
     }
 
-    modifier lawyerExists(address wallet) {
-        require(isLawyerMap[wallet], "Lawyer does not exist");
-        _;
-    }
-
-    modifier caseExists(uint256 caseId) {
-        require(casesMap[caseId].id != 0, "Case does not exist");
-        _;
-    }
-
-    constructor() ERC721("Padi Protocol NFT", "PADI") {
-        owner = msg.sender;
-        admins[msg.sender] = true;
-        padiContract = address(0);
-    }
-
-    function initializePadiContract(address padiContractAddress) external onlyOwner {
-        require(padiContractAddress != address(0), "padiContractAddress should not be empty");
-        padiContract = padiContractAddress;
-    }
- // Fetch a member by their address
-    function members(address memberId) external padiContractInitialized view returns (PadiTypes.Member memory) {
-        require(isMemberMap[memberId], "Address is not a registered member");
-        return membersMap[memberId];
-    }
-
-    // Fetch a lawyer by their address
-    function lawyers(address lawyerAddress) external padiContractInitialized view returns (PadiTypes.Lawyer memory) {
-        require(isLawyerMap[lawyerAddress], "Address is not a registered lawyer");
-        return lawyersMap[lawyerAddress];
-    }
-
-    // Fetch a case by its ID
-    function cases(uint256 caseId) external padiContractInitialized view returns (PadiTypes.Case memory) {
-        require(casesMap[caseId].member != address(0), "Case ID does not exist");
-        return casesMap[caseId];
-    }   
-    
-     function addAdmin(address admin) external onlyOwner {
-        require(admin != address(0), "Invalid admin address");
-        admins[admin] = true;
-        emit AdminAdded(admin);
-    }
-
-    function removeAdmin(address admin) external onlyOwner {
-        require(admin != owner, "Cannot remove owner as admin");
-        admins[admin] = false;
-        emit AdminRemoved(admin);
-    }
-
-    function addOrUpdateMember(PadiTypes.Member memory member) external padiContractInitialized {
+    // Member functions
+    function addOrUpdateMember(PadiTypes.Member calldata member) 
+        external 
+        onlyPadiProtocol 
+    {
         require(member.wallet != address(0), "Invalid member address");
-        require(bytes(member.metadataURI).length > 0, "Invalid metadata URI");
-
-        if (!isMemberMap[member.wallet]) {
-            member.joinDate = block.timestamp;
-            member.totalCases = 0;
-            member.nftId = nextMemberId++;
-            _mint(member.wallet, member.nftId); // Mint an NFT for the new member
-        }
-
         membersMap[member.wallet] = member;
-        isMemberMap[member.wallet] = true;
+        isMemberMap[member.wallet] = member.active;
         emit MemberUpdated(member.wallet, member.nftId, member.active);
     }
 
-    function addOrUpdateLawyer(PadiTypes.Lawyer memory lawyer) external padiContractInitialized {
+    // Lawyer functions
+    function addOrUpdateLawyer(PadiTypes.Lawyer calldata lawyer) 
+        external 
+        onlyPadiProtocol 
+    {
         require(lawyer.wallet != address(0), "Invalid lawyer address");
-        require(bytes(lawyer.profileURI).length > 0, "Invalid profile URI");
-
-        if (!isLawyerMap[lawyer.wallet]) {
-            lawyer.joinDate = block.timestamp;
-            lawyer.totalRewards = 0;
-        }
-
         lawyersMap[lawyer.wallet] = lawyer;
-        isLawyerMap[lawyer.wallet] = true;
+        isLawyerMap[lawyer.wallet] = lawyer.active;
         emit LawyerUpdated(lawyer.wallet, lawyer.active);
     }
 
-    function addOrUpdateCase(
-        PadiTypes.Case memory _case
-    ) external padiContractInitialized {
-        require(_case.member != address(0), "Invalid member address");
-        require(_case.lawyer != address(0), "Invalid lawyer address");
-        require(bytes(_case.descriptionMetadata).length > 0, "Invalid description");
-        require(isMemberMap[_case.member], "Member not registered");
-        require(isLawyerMap[_case.lawyer], "Lawyer not registered");
+    // Case functions
+    function addOrUpdateCase(PadiTypes.Case calldata _case) 
+        external 
+        onlyPadiProtocol 
+    {
+        require(_case.id != 0, "Invalid case ID");
+        require(_case.member != address(0), "Invalid member");
+        require(_case.lawyer != address(0), "Invalid lawyer");
 
-        if (casesMap[_case.id].id == 0) {
-            _case.creationDate = block.timestamp;
-            membersMap[_case.member].totalCases++;
-            lawyersMap[_case.lawyer].caseIds.push(_case.id);
+        // Update case tracking
+        if (_case.resolved) {
+            _moveCaseToClosed(_case);
+        } else {
+            _addToOpenCases(_case);
         }
 
         casesMap[_case.id] = _case;
         emit CaseUpdated(_case.id, _case.member, _case.lawyer, _case.resolved);
     }
 
-    function getNextMemberId() external padiContractInitialized returns (uint256) {
-        return nextMemberId++;
+    // View functions
+    function getLawyerCases(address lawyer) 
+        external 
+        view 
+        returns (uint256[] memory open, uint256[] memory closed) 
+    {
+        return (lawyerOpenCases[lawyer], lawyerClosedCases[lawyer]);
     }
 
-    function getNextCaseId() external padiContractInitialized returns (uint256) {
-        return nextCaseId++;
+    // Internal helpers
+    function _addToOpenCases(PadiTypes.Case calldata _case) private {
+        uint256[] storage cases = lawyerOpenCases[_case.lawyer];
+        if (!_existsInArray(cases, _case.id)) {
+            cases.push(_case.id);
+        }
     }
 
-    function getLawyerCases(
-        address lawyer
-    ) external padiContractInitialized view returns (uint256[] memory) {
-        require(isLawyerMap[lawyer], "Lawyer not registered");
-        return lawyersMap[lawyer].caseIds;
-    }
-   function isMember(address member) external padiContractInitialized view returns (bool) {
-        return isMemberMap[member];
+    function _moveCaseToClosed(PadiTypes.Case calldata _case) private {
+        uint256[] storage open = lawyerOpenCases[_case.lawyer];
+        for (uint256 i = 0; i < open.length; i++) {
+            if (open[i] == _case.id) {
+                open[i] = open[open.length - 1];
+                open.pop();
+                break;
+            }
+        }
+        lawyerClosedCases[_case.lawyer].push(_case.id);
     }
 
-    // Manually implemented getter function for isLawyer
-    function isLawyer(address lawyer) external padiContractInitialized view returns (bool) {
-        return isLawyerMap[lawyer];
+    function _existsInArray(uint256[] storage arr, uint256 value) 
+        private 
+        view 
+        returns (bool) 
+    {
+        for (uint256 i = 0; i < arr.length; i++) {
+            if (arr[i] == value) return true;
+        }
+        return false;
     }
+
+    function isMember(address user) external view returns (bool) {
+    return isMemberMap[user];
+}
+
+function isLawyer(address user) external view returns (bool) {
+    return isLawyerMap[user];
+}
+
+function lawyers(address lawyerAddress) external view override returns (PadiTypes.Lawyer memory) {
+    return lawyersMap[lawyerAddress];
+}
+
+function members(address memberAddress) external view override returns (PadiTypes.Member memory) {
+    return membersMap[memberAddress];
+}
+function cases(uint256 caseId) external view override returns (PadiTypes.Case memory) {
+    return casesMap[caseId];
+}
 }

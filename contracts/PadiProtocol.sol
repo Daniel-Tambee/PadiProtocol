@@ -2,274 +2,149 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "./IPadiProtocol.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "./PadiTypes.sol";
 import "./IPadiStorage.sol";
 import "./PadiStorage.sol";
-import "./PadiTypes.sol";
 
-contract PadiProtocol is IPadiProtocol {
+contract PadiProtocol is ERC721, Ownable {
+    using SafeERC20 for IERC20;
     using PadiTypes for *;
 
     IPadiStorage public storageContract;
     IERC20 public paymentToken;
     address public padiWallet;
+    uint256 private _nftIdCounter = 1;
 
-    
-    constructor(address _storageContract, address _paymentToken, address _paditrust) {
+    modifier onlyMember(address member) {
         require(
-            _storageContract != address(0),
-            "Invalid storage contract address"
+            msg.sender == member || 
+            msg.sender == getRepresentative(member),
+            "Unauthorized: Not member or representative"
         );
-        require(_paymentToken != address(0), "Invalid payment token address");
-        require(_paditrust != address(0), "Invalid payment token address");
-
-        storageContract = IPadiStorage(_storageContract);
-        paymentToken = IERC20(_paymentToken);
-        padiWallet = _paditrust;
+        _;
     }
 
+    modifier onlyActiveLawyer(address lawyer) {
+        require(storageContract.isLawyer(lawyer), "Not registered lawyer");
+        PadiTypes.Lawyer memory l = storageContract.lawyers(lawyer);
+        require(l.active, "Lawyer inactive");
+        _;
+    }
+
+        constructor(
+        address _storage,
+        address _paymentToken,
+        address _padiWallet
+    ) 
+        ERC721("Padi Membership", "PADI")
+        Ownable(msg.sender) // Initialize Ownable with deployer address
+    {
+        storageContract = IPadiStorage(_storage);
+        paymentToken = IERC20(_paymentToken);
+        padiWallet = _padiWallet;
+    }
+
+    // Core Functions
     function mintMembershipNFT(
-        address memberAddress,
+        address member,
         string calldata metadataURI,
         uint256 paymentAmount
-    ) external override {
-        require(paymentAmount > 0, "Payment amount must be greater than zero");
-        require(
-            paymentToken.balanceOf(msg.sender) >= paymentAmount,
-            "Insufficient token balance"
-        );
-        require(
-            paymentToken.allowance(msg.sender, address(this)) >= paymentAmount,
-            "Insufficient token allowance"
-        );
-
-        // Transfer the payment tokens from the sender to the contract
-        bool success = paymentToken.transferFrom(
-            msg.sender,
-            padiWallet,
-            paymentAmount
-        );
-        require(success, "Token transfer failed");
+    ) external {
+        paymentToken.safeTransferFrom(msg.sender, padiWallet, paymentAmount);
+        
+        uint256 nftId = _nftIdCounter++;
+        _mint(member, nftId);
 
         PadiTypes.Member memory newMember = PadiTypes.Member({
-            wallet: memberAddress,
-            nftId: storageContract.getNextMemberId() == 0 ? 1 : storageContract.getNextMemberId(), // Assign appropriate value
+            wallet: member,
+            nftId: nftId,
             metadataURI: metadataURI,
             joinDate: block.timestamp,
             totalCases: 0,
-            representative:address(0),
+            representative: address(0),
             active: true
         });
 
         storageContract.addOrUpdateMember(newMember);
     }
 
-function assignRepresentative(
-        address memberAddress,
-        address representativeAddress
-    ) external override {
-
-        require(
-            representativeAddress != address(0),
-            "Invalid representative address"
-        );
-
-        // Fetch the member's current data
-        PadiTypes.Member memory member = storageContract.members(
-            memberAddress
-        );
-
-        // Update the representative address
-        member.representative = representativeAddress;
-
-        // Save the updated member data back to storage
-        storageContract.addOrUpdateMember(member);
+    function assignRepresentative(
+        address member,
+        address representative
+    ) external onlyMember(member) {
+        PadiTypes.Member memory m = storageContract.members(member);
+        m.representative = representative;
+        storageContract.addOrUpdateMember(m);
     }
 
-function confirmEmergencyResponse(
-    address memberAddress,
-    uint256 caseId,
-    address lawyerAddress
-) external  {
-    // Ensure the member exists and is active
-    require(storageContract.isMember(memberAddress), "Member does not exist");
-    PadiTypes.Member memory member = storageContract.members(memberAddress);
-    require(member.active, "Member is not active");
+    function createCase(
+        address lawyer,
+        string calldata description,
+        uint256 reward
+    ) external onlyMember(msg.sender) {
+        require(balanceOf(msg.sender) > 0, "Membership NFT required");
+        
+        uint256 caseId = storageContract.nextCaseId();
+        PadiTypes.Case memory newCase = PadiTypes.Case({
+            id: caseId,
+            member: msg.sender,
+            lawyer: lawyer,
+            descriptionMetadata: description,
+            creationDate: block.timestamp,
+            resolutionDate: 0,
+            resolved: false,
+            rewardAmount: reward
+        });
 
-    // Ensure the case exists and is associated with the member
-    PadiTypes.Case memory _case = storageContract.cases(caseId);
-    require(_case.id != 0, "Case does not exist");
-    require(_case.member == memberAddress, "Case is not associated with this member");
-
-    // Ensure the lawyer exists and is valid
-    require(storageContract.isLawyer(lawyerAddress), "Lawyer does not exist");
-    PadiTypes.Lawyer memory lawyer = storageContract.lawyers(lawyerAddress);
-    require(lawyer.active, "Lawyer is not active");
-
-    // Perform the emergency response confirmation logic
-    // Update the case as resolved or in-progress (for example)
-    _case.resolved = true;  // or any other status depending on your use case
-
-    // Save the updated case back to storage
-    storageContract.addOrUpdateCase(_case);
-
-    // Emit an event for emergency response confirmation
-}
-
-
-    function rewardLawyerForEmergency(
-    address lawyerAddress,
-    uint256 caseId,
-    uint256 rewardAmount
-) external override {
-    // Ensure the lawyer is registered and active
-    require(storageContract.isLawyer(lawyerAddress), "Lawyer is not registered");
-    PadiTypes.Lawyer memory lawyer = storageContract.lawyers(lawyerAddress);
-    require(lawyer.active, "Lawyer is not active");
-
-    // Ensure the case exists and is associated with the lawyer
-    PadiTypes.Case memory _case = storageContract.cases(caseId);
-    require(_case.id != 0, "Case does not exist");
-    require(_case.lawyer == lawyerAddress, "Lawyer is not handling this case");
-
-    // Ensure sufficient payment
-    require(paymentToken.balanceOf(address(this)) >= rewardAmount, "Insufficient contract balance");
-
-    // Transfer the reward to the lawyer
-    bool success = paymentToken.transfer(lawyerAddress, rewardAmount);
-    require(success, "Reward transfer failed");
-
-    // Emit an event for rewarding the lawyer
-    emit LawyerRewarded(lawyerAddress, caseId, rewardAmount);
-}
-
-    function signUpLawyer(address lawyerAddress, string calldata profileUri) external override {
-    require(lawyerAddress != address(0), "Invalid address");
-    require(!storageContract.isLawyer(lawyerAddress), "Lawyer is already registered");
-
-    // Create a new Lawyer struct
-    PadiTypes.Lawyer memory newLawyer = PadiTypes.Lawyer({
-        wallet: lawyerAddress,
-        caseIds: new uint256[](0), 
-        profileURI: profileUri, // Profile URI can be added later
-        joinDate: block.timestamp, // Set the join date to the current block timestamp
-        totalRewards: 0, // No rewards initially
-        active: true // The lawyer is active upon registration
-    });
-
-    // Add the lawyer to storage
-    storageContract.addOrUpdateLawyer(newLawyer);
-
-    // Emit event for lawyer registration
-    emit LawyerSignedUp(lawyerAddress);
-}
-
-
-
-    function addCase(
-    address lawyerAddress,
-    address memberAddress,
-    string calldata descriptionMetadata, // Added descriptionMetadata parameter
-    uint256 rewardAmount // Added rewardAmount parameter
-) external override {
-    require(lawyerAddress != address(0), "Invalid lawyer address");
-    require(memberAddress != address(0), "Invalid member address");
-    require(storageContract.isLawyer(lawyerAddress), "Lawyer is not registered");
-    require(storageContract.isMember(memberAddress), "Member is not registered");
-
-
-    PadiTypes.Case memory newCase = PadiTypes.Case({
-        id: storageContract.getNextCaseId() == 0 ? 1 : storageContract.getNextCaseId(),
-        member: memberAddress,
-        lawyer: lawyerAddress,
-        descriptionMetadata: descriptionMetadata, // Set the descriptionMetadata from input
-        creationDate: block.timestamp, // Set the creation date
-        resolutionDate: 0, // Set resolution date to 0 initially
-        resolved: false, // Set resolved to false initially
-        rewardAmount: rewardAmount // Set the reward amount for the case
-    });
-
-    // Add the case to storage
-    storageContract.addOrUpdateCase(newCase);
-
-    // // Emit an event for adding a new case
-    // emit CaseAdded(caseId, memberAddress, lawyerAddress);
-}
-
-
-
-   function resolveCase(
-    address lawyerAddress,
-    uint256 caseId
-) external override {
-    require(storageContract.isLawyer(lawyerAddress), "Lawyer is not registered");
-
-    // Fetch the case and ensure it's not already resolved
-    PadiTypes.Case memory _case = storageContract.cases(caseId);
-    require(_case.id != 0, "Case does not exist");
-    require(_case.lawyer == lawyerAddress, "Lawyer is not handling this case");
-    require(!_case.resolved, "Case is already resolved");
-
-    // Mark the case as resolved
-    _case.resolved = true;
-
-    // Save the updated case to storage
-    storageContract.addOrUpdateCase(_case);
-
-    // Emit an event for case resolution
-    // emit CaseResolved(caseId, lawyerAddress);
-}
-
-
-    function getOpenCases(
-    address lawyerAddress
-) external  override returns (uint256[] memory caseIds) {
-    require(storageContract.isLawyer(lawyerAddress), "Lawyer is not registered");
-
-    uint256 totalCases = storageContract.getNextCaseId(); 
-    uint256[] memory openCases = new uint256[](totalCases);
-    uint256 index = 0;
-
-    for (uint256 i = 1; i <= totalCases; i++) {
-        PadiTypes.Case memory _case = storageContract.cases(i);
-        if (_case.lawyer == lawyerAddress && !_case.resolved) {
-            openCases[index] = _case.id;
-            index++;
-        }
+        storageContract.addOrUpdateCase(newCase);
+        paymentToken.safeTransferFrom(msg.sender, address(this), reward);
     }
 
-    return openCases;
-}
+    function resolveCase(uint256 caseId) external onlyActiveLawyer(msg.sender) {
+        PadiTypes.Case memory c = storageContract.cases(caseId);
+        require(c.lawyer == msg.sender, "Case not assigned to lawyer");
+        
+        c.resolved = true;
+        c.resolutionDate = block.timestamp;
+        storageContract.addOrUpdateCase(c);
+        
+        paymentToken.safeTransfer(msg.sender, c.rewardAmount);
+    }
 
+    // View Functions
+    function getRepresentative(address member) public view returns (address) {
+        return storageContract.members(member).representative;
+    }
 
-   function isMember(
-    address memberAddress
-) external view override returns (bool isVerified) {
-    return storageContract.isMember(memberAddress);
-}
+    function getOpenCases(address lawyer) 
+        external 
+        view 
+        returns (uint256[] memory) 
+    {
+        (uint256[] memory open,) = storageContract.getLawyerCases(lawyer);
+        return open;
+    }
 
+    // Admin Functions
+    function registerLawyer(
+        address lawyer,
+        string calldata profileURI
+    ) external onlyOwner {
+        PadiTypes.Lawyer memory newLawyer = PadiTypes.Lawyer({
+            wallet: lawyer,
+            caseIds: new uint256[](0),
+            profileURI: profileURI,
+            joinDate: block.timestamp,
+            totalRewards: 0,
+            active: true
+        });
+        storageContract.addOrUpdateLawyer(newLawyer);
+    }
 
-    function isLawyer(
-    address lawyerAddress
-) external view override returns (bool isRegistered) {
-    return storageContract.isLawyer(lawyerAddress);
-}
-
-
-    function getRepresentative(
-    address memberAddress
-) external view override returns (address representativeAddress) {
-    PadiTypes.Member memory member = storageContract.members(memberAddress);
-    return member.representative;
-}
-
-
-   function setPaymentToken(address tokenAddress) external override {
-    require(tokenAddress != address(0), "Invalid token address");
-    paymentToken = IERC20(tokenAddress);
-    emit PaymentTokenUpdated(tokenAddress);
-}
-
-
-    
+    function setPaymentToken(address token) external onlyOwner {
+        paymentToken = IERC20(token);
+    }
 }

@@ -54,42 +54,16 @@
 			"addOrUpdateMember((address,address,uint256,string,uint256,uint256,bool))": "af947d05",
 			"cases(uint256)": "f09790dd",
 			"getLawyerCases(address)": "8bfeffe5",
-			"getNextCaseId()": "5e88b1e2",
-			"getNextMemberId()": "cb37be9e",
-			"initializePadiContract(address)": "a2ac1764",
+			"initializeProtocol(address)": "3b9cccf0",
 			"isLawyer(address)": "5939a84e",
 			"isMember(address)": "a230c524",
 			"lawyers(address)": "554ae567",
-			"members(address)": "08ae4b0c"
+			"members(address)": "08ae4b0c",
+			"nextCaseId()": "6350eae8",
+			"nextMemberId()": "ae99004c"
 		}
 	},
 	"abi": [
-		{
-			"anonymous": false,
-			"inputs": [
-				{
-					"indexed": true,
-					"internalType": "address",
-					"name": "admin",
-					"type": "address"
-				}
-			],
-			"name": "AdminAdded",
-			"type": "event"
-		},
-		{
-			"anonymous": false,
-			"inputs": [
-				{
-					"indexed": true,
-					"internalType": "address",
-					"name": "admin",
-					"type": "address"
-				}
-			],
-			"name": "AdminRemoved",
-			"type": "event"
-		},
 		{
 			"anonymous": false,
 			"inputs": [
@@ -388,7 +362,12 @@
 			"outputs": [
 				{
 					"internalType": "uint256[]",
-					"name": "",
+					"name": "open",
+					"type": "uint256[]"
+				},
+				{
+					"internalType": "uint256[]",
+					"name": "closed",
 					"type": "uint256[]"
 				}
 			],
@@ -396,40 +375,14 @@
 			"type": "function"
 		},
 		{
-			"inputs": [],
-			"name": "getNextCaseId",
-			"outputs": [
-				{
-					"internalType": "uint256",
-					"name": "",
-					"type": "uint256"
-				}
-			],
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
-			"inputs": [],
-			"name": "getNextMemberId",
-			"outputs": [
-				{
-					"internalType": "uint256",
-					"name": "",
-					"type": "uint256"
-				}
-			],
-			"stateMutability": "nonpayable",
-			"type": "function"
-		},
-		{
 			"inputs": [
 				{
 					"internalType": "address",
-					"name": "padiContractAddress",
+					"name": "_padiProtocol",
 					"type": "address"
 				}
 			],
-			"name": "initializePadiContract",
+			"name": "initializeProtocol",
 			"outputs": [],
 			"stateMutability": "nonpayable",
 			"type": "function"
@@ -438,7 +391,7 @@
 			"inputs": [
 				{
 					"internalType": "address",
-					"name": "",
+					"name": "user",
 					"type": "address"
 				}
 			],
@@ -457,7 +410,7 @@
 			"inputs": [
 				{
 					"internalType": "address",
-					"name": "",
+					"name": "user",
 					"type": "address"
 				}
 			],
@@ -527,7 +480,7 @@
 			"inputs": [
 				{
 					"internalType": "address",
-					"name": "memberId",
+					"name": "memberAddress",
 					"type": "address"
 				}
 			],
@@ -574,6 +527,32 @@
 					"internalType": "struct PadiTypes.Member",
 					"name": "",
 					"type": "tuple"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "nextCaseId",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "nextMemberId",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
 				}
 			],
 			"stateMutability": "view",
