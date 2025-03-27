@@ -6,13 +6,7 @@
 	"output": {
 		"abi": [
 			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "_padiProtocol",
-						"type": "address"
-					}
-				],
+				"inputs": [],
 				"stateMutability": "nonpayable",
 				"type": "constructor"
 			},
@@ -852,19 +846,19 @@
 			]
 		},
 		"contracts/PadiStorage.sol": {
-			"keccak256": "0x4c46aa6c0a93c00b8105de057dd79ead3ea069bb64c86dd8d879e960540d0ea5",
+			"keccak256": "0x03ebf3e2abca8394ff12ef065832675e5b86f72790063f8e1cd72964f18c7bc5",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://6d307dc108b06e38ed6300e2b3c25779bc3eb3aea12d47764aa6dcb212920b71",
-				"dweb:/ipfs/QmWWxkj3uX5bJaRJVtSnmxZJDevyRcijkvDwzP45mi9ZRY"
+				"bzz-raw://3380b7998eac5e1e3e268b1a09d9864c50111368a7b5f3741cce96b0b254029c",
+				"dweb:/ipfs/QmZHiQA7diy4zYxK6q7Yj2qRyh8gRiZ8NvbGN2edErP2wn"
 			]
 		},
 		"contracts/PadiTypes.sol": {
-			"keccak256": "0x6d8e857f5cdd467a484dc2c352ed20482904ff4c6dd5f9626fd8f2603c71b226",
+			"keccak256": "0xfefb5487bd5a4fdec4328f797fef896d36d1cda3752efe613795bbee6c5d783d",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://9f461fcd444fd8e8d51f56d4dad9394a7ab12a897e24a10f2b4370218613970e",
-				"dweb:/ipfs/QmRXr6ZbhzMGV7pScvdiGYAefhZTjgCyDK7LJLnmT3YQhM"
+				"bzz-raw://2a275611bf114c9bd0bffbd32f8eb050cfbd939c093bdf18f1142db94ab921d9",
+				"dweb:/ipfs/QmSBXqktwPQ1TpiLKqpPWn9EBo8HmZL6oYEHu8VFDPtiBp"
 			]
 		}
 	},

@@ -6,81 +6,6 @@
 	"output": {
 		"abi": [
 			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": true,
-						"internalType": "uint256",
-						"name": "caseId",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "address",
-						"name": "member",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "address",
-						"name": "lawyer",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "bool",
-						"name": "resolved",
-						"type": "bool"
-					}
-				],
-				"name": "CaseUpdated",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "lawyer",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "bool",
-						"name": "active",
-						"type": "bool"
-					}
-				],
-				"name": "LawyerUpdated",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "member",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "nftId",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "bool",
-						"name": "active",
-						"type": "bool"
-					}
-				],
-				"name": "MemberUpdated",
-				"type": "event"
-			},
-			{
 				"inputs": [
 					{
 						"components": [
@@ -292,6 +217,19 @@
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "getAndIncrementCaseId",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "address",
@@ -303,29 +241,16 @@
 				"outputs": [
 					{
 						"internalType": "uint256[]",
-						"name": "open",
+						"name": "",
 						"type": "uint256[]"
 					},
 					{
 						"internalType": "uint256[]",
-						"name": "closed",
+						"name": "",
 						"type": "uint256[]"
 					}
 				],
 				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "_padiProtocol",
-						"type": "address"
-					}
-				],
-				"name": "initializeProtocol",
-				"outputs": [],
-				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -472,32 +397,6 @@
 				],
 				"stateMutability": "view",
 				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "nextCaseId",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "nextMemberId",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
 			}
 		],
 		"devdoc": {
@@ -528,19 +427,19 @@
 	},
 	"sources": {
 		"contracts/IPadiStorage.sol": {
-			"keccak256": "0x1d762ff6472afab665a321ace5ced1ca0f5e94b2a2cdaf2c2e70b3fa48ecac02",
+			"keccak256": "0x7f33173492a9cf3c5d63cb515c59cc25691977b50f56069640ed92f6c9b03420",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://32e8a08ae11f38823faba9e51860e1ed62d17e5082b827be6e9847d0f25e647e",
-				"dweb:/ipfs/QmY6ep67CYj7RSL4xDWpmQed31N4mTHqBK1wVYjjYkXfQW"
+				"bzz-raw://43d320ea79ff1914e307887e41246971c2da5bf7b01bd961b8754c9752d44b27",
+				"dweb:/ipfs/QmZNdQAvs8NjDDEgKofkGC1VExPSjdFnp4J2K2RMAY5eA3"
 			]
 		},
 		"contracts/PadiTypes.sol": {
-			"keccak256": "0x6d8e857f5cdd467a484dc2c352ed20482904ff4c6dd5f9626fd8f2603c71b226",
+			"keccak256": "0xfefb5487bd5a4fdec4328f797fef896d36d1cda3752efe613795bbee6c5d783d",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://9f461fcd444fd8e8d51f56d4dad9394a7ab12a897e24a10f2b4370218613970e",
-				"dweb:/ipfs/QmRXr6ZbhzMGV7pScvdiGYAefhZTjgCyDK7LJLnmT3YQhM"
+				"bzz-raw://2a275611bf114c9bd0bffbd32f8eb050cfbd939c093bdf18f1142db94ab921d9",
+				"dweb:/ipfs/QmSBXqktwPQ1TpiLKqpPWn9EBo8HmZL6oYEHu8VFDPtiBp"
 			]
 		}
 	},

@@ -53,92 +53,15 @@
 			"addOrUpdateLawyer((address,uint256[],string,uint256,uint256,bool))": "84500001",
 			"addOrUpdateMember((address,address,uint256,string,uint256,uint256,bool))": "af947d05",
 			"cases(uint256)": "f09790dd",
+			"getAndIncrementCaseId()": "84dc0806",
 			"getLawyerCases(address)": "8bfeffe5",
-			"initializeProtocol(address)": "3b9cccf0",
 			"isLawyer(address)": "5939a84e",
 			"isMember(address)": "a230c524",
 			"lawyers(address)": "554ae567",
-			"members(address)": "08ae4b0c",
-			"nextCaseId()": "6350eae8",
-			"nextMemberId()": "ae99004c"
+			"members(address)": "08ae4b0c"
 		}
 	},
 	"abi": [
-		{
-			"anonymous": false,
-			"inputs": [
-				{
-					"indexed": true,
-					"internalType": "uint256",
-					"name": "caseId",
-					"type": "uint256"
-				},
-				{
-					"indexed": false,
-					"internalType": "address",
-					"name": "member",
-					"type": "address"
-				},
-				{
-					"indexed": false,
-					"internalType": "address",
-					"name": "lawyer",
-					"type": "address"
-				},
-				{
-					"indexed": false,
-					"internalType": "bool",
-					"name": "resolved",
-					"type": "bool"
-				}
-			],
-			"name": "CaseUpdated",
-			"type": "event"
-		},
-		{
-			"anonymous": false,
-			"inputs": [
-				{
-					"indexed": true,
-					"internalType": "address",
-					"name": "lawyer",
-					"type": "address"
-				},
-				{
-					"indexed": false,
-					"internalType": "bool",
-					"name": "active",
-					"type": "bool"
-				}
-			],
-			"name": "LawyerUpdated",
-			"type": "event"
-		},
-		{
-			"anonymous": false,
-			"inputs": [
-				{
-					"indexed": true,
-					"internalType": "address",
-					"name": "member",
-					"type": "address"
-				},
-				{
-					"indexed": false,
-					"internalType": "uint256",
-					"name": "nftId",
-					"type": "uint256"
-				},
-				{
-					"indexed": false,
-					"internalType": "bool",
-					"name": "active",
-					"type": "bool"
-				}
-			],
-			"name": "MemberUpdated",
-			"type": "event"
-		},
 		{
 			"inputs": [
 				{
@@ -351,6 +274,19 @@
 			"type": "function"
 		},
 		{
+			"inputs": [],
+			"name": "getAndIncrementCaseId",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
 			"inputs": [
 				{
 					"internalType": "address",
@@ -362,29 +298,16 @@
 			"outputs": [
 				{
 					"internalType": "uint256[]",
-					"name": "open",
+					"name": "",
 					"type": "uint256[]"
 				},
 				{
 					"internalType": "uint256[]",
-					"name": "closed",
+					"name": "",
 					"type": "uint256[]"
 				}
 			],
 			"stateMutability": "view",
-			"type": "function"
-		},
-		{
-			"inputs": [
-				{
-					"internalType": "address",
-					"name": "_padiProtocol",
-					"type": "address"
-				}
-			],
-			"name": "initializeProtocol",
-			"outputs": [],
-			"stateMutability": "nonpayable",
 			"type": "function"
 		},
 		{
@@ -527,32 +450,6 @@
 					"internalType": "struct PadiTypes.Member",
 					"name": "",
 					"type": "tuple"
-				}
-			],
-			"stateMutability": "view",
-			"type": "function"
-		},
-		{
-			"inputs": [],
-			"name": "nextCaseId",
-			"outputs": [
-				{
-					"internalType": "uint256",
-					"name": "",
-					"type": "uint256"
-				}
-			],
-			"stateMutability": "view",
-			"type": "function"
-		},
-		{
-			"inputs": [],
-			"name": "nextMemberId",
-			"outputs": [
-				{
-					"internalType": "uint256",
-					"name": "",
-					"type": "uint256"
 				}
 			],
 			"stateMutability": "view",

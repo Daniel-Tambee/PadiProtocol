@@ -7,7 +7,6 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./PadiTypes.sol";
 import "./IPadiStorage.sol";
-import "./PadiStorage.sol";
 
 contract PadiProtocol is ERC721, Ownable {
     using SafeERC20 for IERC20;
@@ -34,27 +33,27 @@ contract PadiProtocol is ERC721, Ownable {
         _;
     }
 
-        constructor(
+    constructor(
         address _storage,
         address _paymentToken,
         address _padiWallet
     ) 
         ERC721("Padi Membership", "PADI")
-        Ownable(msg.sender) // Initialize Ownable with deployer address
+        Ownable(msg.sender)
     {
         storageContract = IPadiStorage(_storage);
         paymentToken = IERC20(_paymentToken);
         padiWallet = _padiWallet;
     }
 
-    // Core Functions
     function mintMembershipNFT(
         address member,
         string calldata metadataURI,
         uint256 paymentAmount
     ) external {
+        require(balanceOf(member) == 0, "Already has membership NFT");
         paymentToken.safeTransferFrom(msg.sender, padiWallet, paymentAmount);
-        
+
         uint256 nftId = _nftIdCounter++;
         _mint(member, nftId);
 
@@ -86,8 +85,8 @@ contract PadiProtocol is ERC721, Ownable {
         uint256 reward
     ) external onlyMember(msg.sender) {
         require(balanceOf(msg.sender) > 0, "Membership NFT required");
-        
-        uint256 caseId = storageContract.nextCaseId();
+
+        uint256 caseId = storageContract.getAndIncrementCaseId();
         PadiTypes.Case memory newCase = PadiTypes.Case({
             id: caseId,
             member: msg.sender,
@@ -103,32 +102,49 @@ contract PadiProtocol is ERC721, Ownable {
         paymentToken.safeTransferFrom(msg.sender, address(this), reward);
     }
 
-    function resolveCase(uint256 caseId) external onlyActiveLawyer(msg.sender) {
-        PadiTypes.Case memory c = storageContract.cases(caseId);
-        require(c.lawyer == msg.sender, "Case not assigned to lawyer");
-        
-        c.resolved = true;
-        c.resolutionDate = block.timestamp;
-        storageContract.addOrUpdateCase(c);
-        
-        paymentToken.safeTransfer(msg.sender, c.rewardAmount);
+function resolveCase(uint256 caseId) external onlyActiveLawyer(msg.sender) {
+    PadiTypes.Case memory c = storageContract.cases(caseId);
+    require(c.lawyer == msg.sender, "Case not assigned to lawyer");
+    require(!c.resolved, "Case already resolved");
+
+    // Mark the case as resolved
+    c.resolved = true;
+    c.resolutionDate = block.timestamp;
+    storageContract.addOrUpdateCase(c);
+
+    // Fetch lawyer and update stats
+    PadiTypes.Lawyer memory l = storageContract.lawyers(msg.sender);
+    uint256[] memory existingIds = l.caseIds;
+    uint256[] memory updatedIds = new uint256[](existingIds.length + 1);
+    bool alreadyExists = false;
+
+    for (uint256 i = 0; i < existingIds.length; i++) {
+        updatedIds[i] = existingIds[i];
+        if (existingIds[i] == caseId) {
+            alreadyExists = true;
+        }
     }
 
-    // View Functions
+    if (!alreadyExists) {
+        updatedIds[existingIds.length] = caseId;
+    }
+
+    l.caseIds = updatedIds;
+    l.totalRewards += c.rewardAmount;
+    storageContract.addOrUpdateLawyer(l);
+
+    paymentToken.safeTransfer(msg.sender, c.rewardAmount);
+}
+
     function getRepresentative(address member) public view returns (address) {
         return storageContract.members(member).representative;
     }
 
-    function getOpenCases(address lawyer) 
-        external 
-        view 
-        returns (uint256[] memory) 
-    {
+    function getOpenCases(address lawyer) external view returns (uint256[] memory) {
         (uint256[] memory open,) = storageContract.getLawyerCases(lawyer);
         return open;
     }
 
-    // Admin Functions
     function registerLawyer(
         address lawyer,
         string calldata profileURI

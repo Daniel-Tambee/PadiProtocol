@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 library PadiTypes {
     struct Member {
         address wallet;
-        address representative;     // Legal representative's address
+        address representative;     
         uint256 nftId;
         string metadataURI;
         uint256 joinDate;
