@@ -34,6 +34,13 @@ library PadiTypes {
 
     enum VerificationStatus { Unverified, Verified, Rejected }
 
+    struct Corroborator {
+        address member;
+        uint256 timestamp;
+        string comment;
+        string[] mediaURIs;
+    }
+
     struct Incident {
         uint256 id;
         address reporter;
@@ -41,5 +48,7 @@ library PadiTypes {
         uint256 timestamp;
         VerificationStatus status;
         address verifiedBy;
+        Corroborator[] corroborators;
+        string[] mediaURIs;
     }
 }
