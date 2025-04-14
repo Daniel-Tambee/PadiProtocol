@@ -50,6 +50,7 @@
 		"gasEstimates": null,
 		"methodIdentifiers": {
 			"addCase(address,address,string,uint256)": "91b0ad5b",
+			"addCorroboration(uint256,string,string[])": "45db283d",
 			"assignRepresentative(address,address)": "4158c1b5",
 			"confirmEmergencyResponse(address,uint256,address)": "241f8715",
 			"getOpenCases(address)": "e1a9abf1",
@@ -57,10 +58,12 @@
 			"isLawyer(address)": "5939a84e",
 			"isMember(address)": "a230c524",
 			"mintMembershipNFT(address,string,uint256)": "8baa5d8b",
+			"reportIncident(string,string[])": "f08aa69f",
 			"resolveCase(address,uint256)": "49678605",
 			"rewardLawyerForEmergency(address,uint256,uint256)": "aa9aa17a",
 			"setPaymentToken(address)": "6a326ab1",
-			"signUpLawyer(address,string)": "4b870a83"
+			"signUpLawyer(address,string)": "4b870a83",
+			"updateIncidentStatus(uint256,uint8)": "a3f8d8ed"
 		}
 	},
 	"abi": [
@@ -113,6 +116,31 @@
 			"inputs": [
 				{
 					"indexed": true,
+					"internalType": "uint256",
+					"name": "incidentId",
+					"type": "uint256"
+				},
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "corroborator",
+					"type": "address"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "timestamp",
+					"type": "uint256"
+				}
+			],
+			"name": "CorroborationAdded",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
 					"internalType": "address",
 					"name": "lawyerAddress",
 					"type": "address"
@@ -137,6 +165,56 @@
 				}
 			],
 			"name": "EmergencyResponseConfirmed",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "uint256",
+					"name": "incidentId",
+					"type": "uint256"
+				},
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "reporter",
+					"type": "address"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint256",
+					"name": "timestamp",
+					"type": "uint256"
+				}
+			],
+			"name": "IncidentReported",
+			"type": "event"
+		},
+		{
+			"anonymous": false,
+			"inputs": [
+				{
+					"indexed": true,
+					"internalType": "uint256",
+					"name": "incidentId",
+					"type": "uint256"
+				},
+				{
+					"indexed": false,
+					"internalType": "uint8",
+					"name": "status",
+					"type": "uint8"
+				},
+				{
+					"indexed": true,
+					"internalType": "address",
+					"name": "verifier",
+					"type": "address"
+				}
+			],
+			"name": "IncidentStatusUpdated",
 			"type": "event"
 		},
 		{
@@ -252,6 +330,29 @@
 				}
 			],
 			"name": "addCase",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "incidentId",
+					"type": "uint256"
+				},
+				{
+					"internalType": "string",
+					"name": "comment",
+					"type": "string"
+				},
+				{
+					"internalType": "string[]",
+					"name": "mediaURIs",
+					"type": "string[]"
+				}
+			],
+			"name": "addCorroboration",
 			"outputs": [],
 			"stateMutability": "nonpayable",
 			"type": "function"
@@ -399,6 +500,30 @@
 		{
 			"inputs": [
 				{
+					"internalType": "string",
+					"name": "descriptionMetadata",
+					"type": "string"
+				},
+				{
+					"internalType": "string[]",
+					"name": "mediaURIs",
+					"type": "string[]"
+				}
+			],
+			"name": "reportIncident",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "incidentId",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
 					"internalType": "address",
 					"name": "lawyerAddress",
 					"type": "address"
@@ -464,6 +589,24 @@
 				}
 			],
 			"name": "signUpLawyer",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "incidentId",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint8",
+					"name": "status",
+					"type": "uint8"
+				}
+			],
+			"name": "updateIncidentStatus",
 			"outputs": [],
 			"stateMutability": "nonpayable",
 			"type": "function"

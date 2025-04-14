@@ -54,6 +54,31 @@
 				"inputs": [
 					{
 						"indexed": true,
+						"internalType": "uint256",
+						"name": "incidentId",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "corroborator",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"name": "CorroborationAdded",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
 						"internalType": "address",
 						"name": "lawyerAddress",
 						"type": "address"
@@ -78,6 +103,56 @@
 					}
 				],
 				"name": "EmergencyResponseConfirmed",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "incidentId",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "reporter",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"name": "IncidentReported",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "incidentId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint8",
+						"name": "status",
+						"type": "uint8"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "verifier",
+						"type": "address"
+					}
+				],
+				"name": "IncidentStatusUpdated",
 				"type": "event"
 			},
 			{
@@ -193,6 +268,29 @@
 					}
 				],
 				"name": "addCase",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "incidentId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "comment",
+						"type": "string"
+					},
+					{
+						"internalType": "string[]",
+						"name": "mediaURIs",
+						"type": "string[]"
+					}
+				],
+				"name": "addCorroboration",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -340,6 +438,30 @@
 			{
 				"inputs": [
 					{
+						"internalType": "string",
+						"name": "descriptionMetadata",
+						"type": "string"
+					},
+					{
+						"internalType": "string[]",
+						"name": "mediaURIs",
+						"type": "string[]"
+					}
+				],
+				"name": "reportIncident",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "incidentId",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "address",
 						"name": "lawyerAddress",
 						"type": "address"
@@ -408,6 +530,24 @@
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "incidentId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint8",
+						"name": "status",
+						"type": "uint8"
+					}
+				],
+				"name": "updateIncidentStatus",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
 			}
 		],
 		"devdoc": {
@@ -425,12 +565,33 @@
 						"lawyerAddress": "The address of the lawyer handling the case."
 					}
 				},
+				"CorroborationAdded(uint256,address,uint256)": {
+					"params": {
+						"corroborator": "The address of the member adding the corroboration.",
+						"incidentId": "The unique identifier for the incident.",
+						"timestamp": "The time when the corroboration was added."
+					}
+				},
 				"EmergencyResponseConfirmed(address,uint256,address,uint256)": {
 					"params": {
 						"caseId": "The unique identifier for the case.",
 						"lawyerAddress": "The address of the lawyer responding to the emergency.",
 						"memberAddress": "The address of the member involved.",
 						"timestamp": "The time when the response was confirmed."
+					}
+				},
+				"IncidentReported(uint256,address,uint256)": {
+					"params": {
+						"incidentId": "The unique identifier for the incident.",
+						"reporter": "The address of the member reporting the incident.",
+						"timestamp": "The time when the incident was reported."
+					}
+				},
+				"IncidentStatusUpdated(uint256,uint8,address)": {
+					"params": {
+						"incidentId": "The unique identifier for the incident.",
+						"status": "The new verification status (0: Unverified, 1: Verified, 2: Rejected).",
+						"verifier": "The address of the entity that updated the status."
 					}
 				},
 				"LawyerRewarded(address,uint256,uint256)": {
@@ -467,8 +628,17 @@
 			"methods": {
 				"addCase(address,address,string,uint256)": {
 					"params": {
+						"descriptionMetadata": "A URI describing the case.",
 						"lawyerAddress": "The address of the lawyer handling the case.",
-						"memberAddress": "The address of the member involved in the case."
+						"memberAddress": "The address of the member involved in the case.",
+						"rewardAmount": "The reward amount associated with the case."
+					}
+				},
+				"addCorroboration(uint256,string,string[])": {
+					"params": {
+						"comment": "A comment providing additional context.",
+						"incidentId": "The unique identifier for the incident.",
+						"mediaURIs": "An array of URIs pointing to supplementary evidence."
 					}
 				},
 				"assignRepresentative(address,address)": {
@@ -523,6 +693,15 @@
 						"paymentAmount": "The amount of the specific token to be paid."
 					}
 				},
+				"reportIncident(string,string[])": {
+					"params": {
+						"descriptionMetadata": "A URI with details about the incident.",
+						"mediaURIs": "An array of URIs pointing to evidence (e.g., images, videos)."
+					},
+					"returns": {
+						"incidentId": "The unique identifier for the reported incident."
+					}
+				},
 				"resolveCase(address,uint256)": {
 					"params": {
 						"caseId": "The unique identifier for the case.",
@@ -543,7 +722,14 @@
 				},
 				"signUpLawyer(address,string)": {
 					"params": {
-						"lawyerAddress": "The address of the lawyer signing up."
+						"lawyerAddress": "The address of the lawyer signing up.",
+						"profileUri": "The URI pointing to the lawyer's profile."
+					}
+				},
+				"updateIncidentStatus(uint256,uint8)": {
+					"params": {
+						"incidentId": "The unique identifier for the incident.",
+						"status": "The new verification status (0: Unverified, 1: Verified, 2: Rejected)."
 					}
 				}
 			},
@@ -557,8 +743,17 @@
 				"CaseResolved(address,uint256)": {
 					"notice": "Event emitted when a case is resolved for a lawyer."
 				},
+				"CorroborationAdded(uint256,address,uint256)": {
+					"notice": "Event emitted when a corroboration is added to an incident."
+				},
 				"EmergencyResponseConfirmed(address,uint256,address,uint256)": {
 					"notice": "Event emitted when an emergency response is confirmed by a lawyer."
+				},
+				"IncidentReported(uint256,address,uint256)": {
+					"notice": "Event emitted when a new incident is reported."
+				},
+				"IncidentStatusUpdated(uint256,uint8,address)": {
+					"notice": "Event emitted when an incident's verification status is updated."
 				},
 				"LawyerRewarded(address,uint256,uint256)": {
 					"notice": "Event emitted when a lawyer is rewarded after confirming an emergency response."
@@ -581,6 +776,9 @@
 				"addCase(address,address,string,uint256)": {
 					"notice": "Track a new case for a lawyer."
 				},
+				"addCorroboration(uint256,string,string[])": {
+					"notice": "Add a corroboration (supporting evidence) to an existing incident."
+				},
 				"assignRepresentative(address,address)": {
 					"notice": "Assign a legal representative (Padi) to a member."
 				},
@@ -602,6 +800,9 @@
 				"mintMembershipNFT(address,string,uint256)": {
 					"notice": "Mint an NFT ID card for a new member."
 				},
+				"reportIncident(string,string[])": {
+					"notice": "Report a new incident of abuse or misconduct."
+				},
 				"resolveCase(address,uint256)": {
 					"notice": "Mark a case as resolved for a lawyer."
 				},
@@ -613,6 +814,9 @@
 				},
 				"signUpLawyer(address,string)": {
 					"notice": "Sign up a lawyer as a legal representative."
+				},
+				"updateIncidentStatus(uint256,uint8)": {
+					"notice": "Update the verification status of an incident."
 				}
 			},
 			"version": 1
@@ -635,11 +839,11 @@
 	},
 	"sources": {
 		"contracts/IPadiProtocol.sol": {
-			"keccak256": "0xfc1f991c069de8144118f01347cc246cf7afbec079607595eed371cd39e478d9",
+			"keccak256": "0x6b0b93b8f88063cc6155832b04b10056035841ac787dab08edc5f882dccc7f05",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://2742293b6f76fe1774856f0b90b01684d00945aebe47598c4a25fd6a34b0e0b1",
-				"dweb:/ipfs/QmSp71SMGBWWVdrfvQqAi9GnpUpu9QNRgMt4Yjpo2tkJrX"
+				"bzz-raw://53b50e53c39c9cc7932792b89633397f2432860d39b50e33628a8cf2cd438c28",
+				"dweb:/ipfs/QmZ3ELLghc2hHQ9FQjsvZmbx2ndm2MVg3NgEf1YTTKjcXW"
 			]
 		}
 	},

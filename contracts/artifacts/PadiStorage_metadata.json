@@ -42,13 +42,13 @@
 						"type": "uint256"
 					},
 					{
-						"indexed": false,
+						"indexed": true,
 						"internalType": "address",
 						"name": "member",
 						"type": "address"
 					},
 					{
-						"indexed": false,
+						"indexed": true,
 						"internalType": "address",
 						"name": "lawyer",
 						"type": "address"
@@ -68,8 +68,58 @@
 				"inputs": [
 					{
 						"indexed": true,
+						"internalType": "uint256",
+						"name": "incidentId",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
 						"internalType": "address",
-						"name": "lawyer",
+						"name": "corroborator",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"name": "CorroborationAdded",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "incidentId",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "reporter",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"name": "IncidentReported",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "wallet",
 						"type": "address"
 					},
 					{
@@ -88,7 +138,7 @@
 					{
 						"indexed": true,
 						"internalType": "address",
-						"name": "member",
+						"name": "wallet",
 						"type": "address"
 					},
 					{
@@ -125,6 +175,46 @@
 				],
 				"name": "OwnershipTransferred",
 				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "incidentId",
+						"type": "uint256"
+					},
+					{
+						"components": [
+							{
+								"internalType": "address",
+								"name": "member",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256",
+								"name": "timestamp",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "comment",
+								"type": "string"
+							},
+							{
+								"internalType": "string[]",
+								"name": "mediaURIs",
+								"type": "string[]"
+							}
+						],
+						"internalType": "struct PadiTypes.Corroborator",
+						"name": "corroborator",
+						"type": "tuple"
+					}
+				],
+				"name": "addCorroboratorToIncident",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
 			},
 			{
 				"inputs": [
@@ -177,6 +267,83 @@
 					}
 				],
 				"name": "addOrUpdateCase",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "id",
+								"type": "uint256"
+							},
+							{
+								"internalType": "address",
+								"name": "reporter",
+								"type": "address"
+							},
+							{
+								"internalType": "string",
+								"name": "descriptionMetadata",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "timestamp",
+								"type": "uint256"
+							},
+							{
+								"internalType": "enum PadiTypes.VerificationStatus",
+								"name": "status",
+								"type": "uint8"
+							},
+							{
+								"internalType": "address",
+								"name": "verifiedBy",
+								"type": "address"
+							},
+							{
+								"components": [
+									{
+										"internalType": "address",
+										"name": "member",
+										"type": "address"
+									},
+									{
+										"internalType": "uint256",
+										"name": "timestamp",
+										"type": "uint256"
+									},
+									{
+										"internalType": "string",
+										"name": "comment",
+										"type": "string"
+									},
+									{
+										"internalType": "string[]",
+										"name": "mediaURIs",
+										"type": "string[]"
+									}
+								],
+								"internalType": "struct PadiTypes.Corroborator[]",
+								"name": "corroborators",
+								"type": "tuple[]"
+							},
+							{
+								"internalType": "string[]",
+								"name": "mediaURIs",
+								"type": "string[]"
+							}
+						],
+						"internalType": "struct PadiTypes.Incident",
+						"name": "incident",
+						"type": "tuple"
+					}
+				],
+				"name": "addOrUpdateIncident",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -392,6 +559,32 @@
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "getAndIncrementCaseId",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "getAndIncrementIncidentId",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "address",
@@ -410,6 +603,133 @@
 						"internalType": "uint256[]",
 						"name": "closed",
 						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "incidentId",
+						"type": "uint256"
+					}
+				],
+				"name": "incidents",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "id",
+								"type": "uint256"
+							},
+							{
+								"internalType": "address",
+								"name": "reporter",
+								"type": "address"
+							},
+							{
+								"internalType": "string",
+								"name": "descriptionMetadata",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "timestamp",
+								"type": "uint256"
+							},
+							{
+								"internalType": "enum PadiTypes.VerificationStatus",
+								"name": "status",
+								"type": "uint8"
+							},
+							{
+								"internalType": "address",
+								"name": "verifiedBy",
+								"type": "address"
+							},
+							{
+								"components": [
+									{
+										"internalType": "address",
+										"name": "member",
+										"type": "address"
+									},
+									{
+										"internalType": "uint256",
+										"name": "timestamp",
+										"type": "uint256"
+									},
+									{
+										"internalType": "string",
+										"name": "comment",
+										"type": "string"
+									},
+									{
+										"internalType": "string[]",
+										"name": "mediaURIs",
+										"type": "string[]"
+									}
+								],
+								"internalType": "struct PadiTypes.Corroborator[]",
+								"name": "corroborators",
+								"type": "tuple[]"
+							},
+							{
+								"internalType": "string[]",
+								"name": "mediaURIs",
+								"type": "string[]"
+							}
+						],
+						"internalType": "struct PadiTypes.Incident",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "incidentsMap",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "reporter",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "descriptionMetadata",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					},
+					{
+						"internalType": "enum PadiTypes.VerificationStatus",
+						"name": "status",
+						"type": "uint8"
+					},
+					{
+						"internalType": "address",
+						"name": "verifiedBy",
+						"type": "address"
 					}
 				],
 				"stateMutability": "view",
@@ -714,6 +1034,19 @@
 			},
 			{
 				"inputs": [],
+				"name": "nextIncidentId",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "nextMemberId",
 				"outputs": [
 					{
@@ -787,6 +1120,30 @@
 			},
 			"kind": "dev",
 			"methods": {
+				"addCorroboratorToIncident(uint256,(address,uint256,string,string[]))": {
+					"params": {
+						"corroborator": "The Corroborator struct containing the member, comment, media evidence, and timestamp.",
+						"incidentId": "The unique identifier for the incident."
+					}
+				},
+				"addOrUpdateIncident((uint256,address,string,uint256,uint8,address,(address,uint256,string,string[])[],string[]))": {
+					"params": {
+						"incident": "The Incident struct containing all relevant data."
+					}
+				},
+				"getAndIncrementIncidentId()": {
+					"returns": {
+						"_0": "The new incident ID."
+					}
+				},
+				"incidents(uint256)": {
+					"params": {
+						"incidentId": "The unique identifier of the incident."
+					},
+					"returns": {
+						"_0": "An Incident struct containing details such as reporter, description, status, evidence, and corroborators."
+					}
+				},
 				"owner()": {
 					"details": "Returns the address of the current owner."
 				},
@@ -801,7 +1158,20 @@
 		},
 		"userdoc": {
 			"kind": "user",
-			"methods": {},
+			"methods": {
+				"addCorroboratorToIncident(uint256,(address,uint256,string,string[]))": {
+					"notice": "Append a new corroborator entry to an existing incident."
+				},
+				"addOrUpdateIncident((uint256,address,string,uint256,uint8,address,(address,uint256,string,string[])[],string[]))": {
+					"notice": "Add a new incident or update an existing one."
+				},
+				"getAndIncrementIncidentId()": {
+					"notice": "Generate a new unique incident identifier and increment the internal counter."
+				},
+				"incidents(uint256)": {
+					"notice": "Retrieve a specific incident by its identifier."
+				}
+			},
 			"version": 1
 		}
 	},
@@ -838,27 +1208,27 @@
 			]
 		},
 		"contracts/IPadiStorage.sol": {
-			"keccak256": "0x1d762ff6472afab665a321ace5ced1ca0f5e94b2a2cdaf2c2e70b3fa48ecac02",
+			"keccak256": "0xb5dc23652e797fa05061311e5e1a00eb131c84368701f026550db4f9b6e25b67",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://32e8a08ae11f38823faba9e51860e1ed62d17e5082b827be6e9847d0f25e647e",
-				"dweb:/ipfs/QmY6ep67CYj7RSL4xDWpmQed31N4mTHqBK1wVYjjYkXfQW"
+				"bzz-raw://775bed319610ce62663a83387155db8c87c8da1729f82ab3709c9e763b491d65",
+				"dweb:/ipfs/QmQQxVdRKo7ohZzq2bVEgAuK3m45Rtew5KnsrGWeTECFtt"
 			]
 		},
 		"contracts/PadiStorage.sol": {
-			"keccak256": "0x03ebf3e2abca8394ff12ef065832675e5b86f72790063f8e1cd72964f18c7bc5",
+			"keccak256": "0x7405d78811205a14ace996f523b9b11fd515ca0a7106b3644c1ec2e98abb3dbd",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://3380b7998eac5e1e3e268b1a09d9864c50111368a7b5f3741cce96b0b254029c",
-				"dweb:/ipfs/QmZHiQA7diy4zYxK6q7Yj2qRyh8gRiZ8NvbGN2edErP2wn"
+				"bzz-raw://4bcac4d988d936c379a2ad9362dc35282d3219dc31037156b35172ce5432e471",
+				"dweb:/ipfs/QmcgbyziLnwjRUa7882aA1edyhJbZ8XJ6vM53MyHas2noP"
 			]
 		},
 		"contracts/PadiTypes.sol": {
-			"keccak256": "0xfefb5487bd5a4fdec4328f797fef896d36d1cda3752efe613795bbee6c5d783d",
+			"keccak256": "0xe2d9055b759f86531d68cd8cdff0e5bf84c264ba706cdba15de09c1a20a53103",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://2a275611bf114c9bd0bffbd32f8eb050cfbd939c093bdf18f1142db94ab921d9",
-				"dweb:/ipfs/QmSBXqktwPQ1TpiLKqpPWn9EBo8HmZL6oYEHu8VFDPtiBp"
+				"bzz-raw://3f1b53cb23b1b7d6b45362bd4d0557911c0f03a8a7b78661e53072694190878f",
+				"dweb:/ipfs/QmeEX2iVAKfNDDovU2ALQMUQAEyxwuuzizTy3gsgqfRyLF"
 			]
 		}
 	},

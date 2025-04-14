@@ -11,10 +11,13 @@ contract PadiStorage is IPadiStorage, Ownable {
     address public padiProtocol;
     uint256 public nextMemberId = 1;
     uint256 public nextCaseId = 1;
+    uint256 public nextIncidentId = 1;
 
     mapping(address => PadiTypes.Member) public membersMap;
     mapping(address => PadiTypes.Lawyer) public lawyersMap;
     mapping(uint256 => PadiTypes.Case) public casesMap;
+    mapping(uint256 => PadiTypes.Incident) public incidentsMap;
+
     mapping(address => bool) public isMemberMap;
     mapping(address => bool) public isLawyerMap;
 
@@ -24,6 +27,8 @@ contract PadiStorage is IPadiStorage, Ownable {
     event MemberUpdated(address indexed wallet, uint256 nftId, bool active);
     event LawyerUpdated(address indexed wallet, bool active);
     event CaseUpdated(uint256 indexed caseId, address indexed member, address indexed lawyer, bool resolved);
+    event IncidentReported(uint256 indexed incidentId, address indexed reporter, uint256 timestamp);
+    event CorroborationAdded(uint256 indexed incidentId, address indexed corroborator, uint256 timestamp);
 
     modifier onlyPadiProtocol() {
         require(msg.sender == padiProtocol, "Unauthorized access");
@@ -37,25 +42,28 @@ contract PadiStorage is IPadiStorage, Ownable {
         padiProtocol = _padiProtocol;
     }
 
-    function getAndIncrementCaseId() external onlyPadiProtocol returns (uint256) {
+    // ---------------------------
+    // Case-Related Functions
+    // ---------------------------
+    function getAndIncrementCaseId() external override onlyPadiProtocol returns (uint256) {
         return nextCaseId++;
     }
 
-    function addOrUpdateMember(PadiTypes.Member calldata member) external onlyPadiProtocol {
+    function addOrUpdateMember(PadiTypes.Member calldata member) external override onlyPadiProtocol {
         require(member.wallet != address(0), "Invalid member address");
         membersMap[member.wallet] = member;
         isMemberMap[member.wallet] = member.active;
         emit MemberUpdated(member.wallet, member.nftId, member.active);
     }
 
-    function addOrUpdateLawyer(PadiTypes.Lawyer calldata lawyer) external onlyPadiProtocol {
+    function addOrUpdateLawyer(PadiTypes.Lawyer calldata lawyer) external override onlyPadiProtocol {
         require(lawyer.wallet != address(0), "Invalid lawyer address");
         lawyersMap[lawyer.wallet] = lawyer;
         isLawyerMap[lawyer.wallet] = lawyer.active;
         emit LawyerUpdated(lawyer.wallet, lawyer.active);
     }
 
-    function addOrUpdateCase(PadiTypes.Case calldata _case) external onlyPadiProtocol {
+    function addOrUpdateCase(PadiTypes.Case calldata _case) external override onlyPadiProtocol {
         require(_case.id != 0, "Invalid case ID");
         require(_case.member != address(0), "Invalid member");
         require(_case.lawyer != address(0), "Invalid lawyer");
@@ -70,14 +78,14 @@ contract PadiStorage is IPadiStorage, Ownable {
         emit CaseUpdated(_case.id, _case.member, _case.lawyer, _case.resolved);
     }
 
-    function getLawyerCases(address lawyer) external view returns (uint256[] memory open, uint256[] memory closed) {
+    function getLawyerCases(address lawyer) external view override returns (uint256[] memory open, uint256[] memory closed) {
         return (lawyerOpenCases[lawyer], lawyerClosedCases[lawyer]);
     }
 
     function _addToOpenCases(PadiTypes.Case calldata _case) private {
-        uint256[] storage cases = lawyerOpenCases[_case.lawyer];
-        if (!_existsInArray(cases, _case.id)) {
-            cases.push(_case.id);
+        uint256[] storage casesArray = lawyerOpenCases[_case.lawyer];
+        if (!_existsInArray(casesArray, _case.id)) {
+            casesArray.push(_case.id);
         }
     }
 
@@ -100,11 +108,11 @@ contract PadiStorage is IPadiStorage, Ownable {
         return false;
     }
 
-    function isMember(address user) external view returns (bool) {
+    function isMember(address user) external view override returns (bool) {
         return isMemberMap[user];
     }
 
-    function isLawyer(address user) external view returns (bool) {
+    function isLawyer(address user) external view override returns (bool) {
         return isLawyerMap[user];
     }
 
@@ -119,4 +127,29 @@ contract PadiStorage is IPadiStorage, Ownable {
     function cases(uint256 caseId) external view override returns (PadiTypes.Case memory) {
         return casesMap[caseId];
     }
+
+    // ---------------------------
+    // Incident-Related Functions
+    // ---------------------------
+    function incidents(uint256 incidentId) external view override returns (PadiTypes.Incident memory) {
+        return incidentsMap[incidentId];
+    }
+
+    function addOrUpdateIncident(PadiTypes.Incident calldata incident) external override onlyPadiProtocol {
+        require(incident.id != 0, "Invalid incident id");
+        incidentsMap[incident.id] = incident;
+        emit IncidentReported(incident.id, incident.reporter, incident.timestamp);
+    }
+
+    function getAndIncrementIncidentId() external override onlyPadiProtocol returns (uint256) {
+        return nextIncidentId++;
+    }
+
+    function addCorroboratorToIncident(uint256 incidentId, PadiTypes.Corroborator calldata corroborator) external override onlyPadiProtocol {
+        PadiTypes.Incident storage inc = incidentsMap[incidentId];
+        require(inc.id != 0, "Incident does not exist");
+        inc.corroborators.push(corroborator);
+        emit CorroborationAdded(incidentId, corroborator.member, block.timestamp);
+    }
 }
+

@@ -51,19 +51,25 @@ interface IPadiProtocol {
     /**
      * @notice Sign up a lawyer as a legal representative.
      * @param lawyerAddress The address of the lawyer signing up.
+     * @param profileUri The URI pointing to the lawyer's profile.
      */
-    function signUpLawyer(address lawyerAddress,string calldata profileUri) external;
+    function signUpLawyer(
+        address lawyerAddress,
+        string calldata profileUri
+    ) external;
 
     /**
      * @notice Track a new case for a lawyer.
      * @param lawyerAddress The address of the lawyer handling the case.
      * @param memberAddress The address of the member involved in the case.
+     * @param descriptionMetadata A URI describing the case.
+     * @param rewardAmount The reward amount associated with the case.
      */
     function addCase(
-       address lawyerAddress,
-    address memberAddress,
-    string calldata descriptionMetadata, // Added descriptionMetadata parameter
-    uint256 rewardAmount
+        address lawyerAddress,
+        address memberAddress,
+        string calldata descriptionMetadata,
+        uint256 rewardAmount
     ) external;
 
     /**
@@ -80,7 +86,7 @@ interface IPadiProtocol {
      */
     function getOpenCases(
         address lawyerAddress
-    ) external  returns (uint256[] memory caseIds);
+    ) external returns (uint256[] memory caseIds);
 
     /**
      * @notice Check if an address is a verified member.
@@ -115,7 +121,46 @@ interface IPadiProtocol {
      */
     function setPaymentToken(address tokenAddress) external;
 
+    // -------------------------------------------------------------------------
+    // New functions and events for Incident and Corroborator interactions
+    // -------------------------------------------------------------------------
 
+    /**
+     * @notice Report a new incident of abuse or misconduct.
+     * @param descriptionMetadata A URI with details about the incident.
+     * @param mediaURIs An array of URIs pointing to evidence (e.g., images, videos).
+     * @return incidentId The unique identifier for the reported incident.
+     */
+    function reportIncident(
+        string calldata descriptionMetadata,
+        string[] calldata mediaURIs
+    ) external returns (uint256 incidentId);
+
+    /**
+     * @notice Add a corroboration (supporting evidence) to an existing incident.
+     * @param incidentId The unique identifier for the incident.
+     * @param comment A comment providing additional context.
+     * @param mediaURIs An array of URIs pointing to supplementary evidence.
+     */
+    function addCorroboration(
+        uint256 incidentId,
+        string calldata comment,
+        string[] calldata mediaURIs
+    ) external;
+
+    /**
+     * @notice Update the verification status of an incident.
+     * @param incidentId The unique identifier for the incident.
+     * @param status The new verification status (0: Unverified, 1: Verified, 2: Rejected).
+     */
+    function updateIncidentStatus(
+        uint256 incidentId,
+        uint8 status
+    ) external;
+
+    // -------------------------------------------------------------------------
+    // Events for Incident and Corroborator interactions
+    // -------------------------------------------------------------------------
 
     /**
      * @notice Event emitted when a membership NFT is minted.
@@ -192,5 +237,41 @@ interface IPadiProtocol {
         uint256 indexed caseId,
         address indexed memberAddress,
         uint256 timestamp
+    );
+
+    /**
+     * @notice Event emitted when a new incident is reported.
+     * @param incidentId The unique identifier for the incident.
+     * @param reporter The address of the member reporting the incident.
+     * @param timestamp The time when the incident was reported.
+     */
+    event IncidentReported(
+        uint256 indexed incidentId,
+        address indexed reporter,
+        uint256 timestamp
+    );
+
+    /**
+     * @notice Event emitted when a corroboration is added to an incident.
+     * @param incidentId The unique identifier for the incident.
+     * @param corroborator The address of the member adding the corroboration.
+     * @param timestamp The time when the corroboration was added.
+     */
+    event CorroborationAdded(
+        uint256 indexed incidentId,
+        address indexed corroborator,
+        uint256 timestamp
+    );
+
+    /**
+     * @notice Event emitted when an incident's verification status is updated.
+     * @param incidentId The unique identifier for the incident.
+     * @param status The new verification status (0: Unverified, 1: Verified, 2: Rejected).
+     * @param verifier The address of the entity that updated the status.
+     */
+    event IncidentStatusUpdated(
+        uint256 indexed incidentId,
+        uint8 status,
+        address indexed verifier
     );
 }
