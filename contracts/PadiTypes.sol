@@ -31,4 +31,15 @@ library PadiTypes {
         bool resolved;
         uint256 rewardAmount;
     }
+
+    enum VerificationStatus { Unverified, Verified, Rejected }
+
+    struct Incident {
+        uint256 id;
+        address reporter;
+        string descriptionMetadata;
+        uint256 timestamp;
+        VerificationStatus status;
+        address verifiedBy;
+    }
 }
