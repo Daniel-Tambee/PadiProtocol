@@ -218,6 +218,213 @@
 					{
 						"indexed": true,
 						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "caseId",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "memberAddress",
+						"type": "address"
+					}
+				],
+				"name": "CaseAdded",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "caseId",
+						"type": "uint256"
+					}
+				],
+				"name": "CaseResolved",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "incidentId",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "corroborator",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"name": "CorroborationAdded",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "caseId",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "memberAddress",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"name": "EmergencyResponseConfirmed",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "incidentId",
+						"type": "uint256"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "reporter",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "timestamp",
+						"type": "uint256"
+					}
+				],
+				"name": "IncidentReported",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "incidentId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint8",
+						"name": "status",
+						"type": "uint8"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "verifier",
+						"type": "address"
+					}
+				],
+				"name": "IncidentStatusUpdated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "rewardAmount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "caseId",
+						"type": "uint256"
+					}
+				],
+				"name": "LawyerRewarded",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					}
+				],
+				"name": "LawyerSignedUp",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "memberAddress",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "MembershipNFTMinted",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
 						"name": "previousOwner",
 						"type": "address"
 					},
@@ -229,6 +436,38 @@
 					}
 				],
 				"name": "OwnershipTransferred",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "tokenAddress",
+						"type": "address"
+					}
+				],
+				"name": "PaymentTokenUpdated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "memberAddress",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "representativeAddress",
+						"type": "address"
+					}
+				],
+				"name": "RepresentativeAssigned",
 				"type": "event"
 			},
 			{
@@ -255,6 +494,57 @@
 				],
 				"name": "Transfer",
 				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "memberAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "descriptionMetadata",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "rewardAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "addCase",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "incidentId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "comment",
+						"type": "string"
+					},
+					{
+						"internalType": "string[]",
+						"name": "mediaURIs",
+						"type": "string[]"
+					}
+				],
+				"name": "addCorroboration",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
 			},
 			{
 				"inputs": [
@@ -309,6 +599,29 @@
 					}
 				],
 				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "memberAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "caseId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					}
+				],
+				"name": "confirmEmergencyResponse",
+				"outputs": [],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -405,6 +718,44 @@
 					}
 				],
 				"name": "isApprovedForAll",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					}
+				],
+				"name": "isLawyer",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "memberAddress",
+						"type": "address"
+					}
+				],
+				"name": "isMember",
 				"outputs": [
 					{
 						"internalType": "bool",
@@ -537,12 +888,64 @@
 			{
 				"inputs": [
 					{
+						"internalType": "string",
+						"name": "descriptionMetadata",
+						"type": "string"
+					},
+					{
+						"internalType": "string[]",
+						"name": "mediaURIs",
+						"type": "string[]"
+					}
+				],
+				"name": "reportIncident",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "incidentId",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					},
+					{
 						"internalType": "uint256",
 						"name": "caseId",
 						"type": "uint256"
 					}
 				],
 				"name": "resolveCase",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "lawyerAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "caseId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "rewardAmount",
+						"type": "uint256"
+					}
+				],
+				"name": "rewardLawyerForEmergency",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -625,6 +1028,24 @@
 					}
 				],
 				"name": "setPaymentToken",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "lawyer",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "profileURI",
+						"type": "string"
+					}
+				],
+				"name": "signUpLawyer",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -728,6 +1149,24 @@
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "incidentId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint8",
+						"name": "status",
+						"type": "uint8"
+					}
+				],
+				"name": "updateIncidentStatus",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
 			}
 		],
 		"devdoc": {
@@ -822,23 +1261,132 @@
 				"ApprovalForAll(address,address,bool)": {
 					"details": "Emitted when `owner` enables or disables (`approved`) `operator` to manage all of its assets."
 				},
+				"CaseAdded(address,uint256,address)": {
+					"params": {
+						"caseId": "The unique identifier for the case.",
+						"lawyerAddress": "The address of the lawyer handling the case.",
+						"memberAddress": "The address of the member involved in the case."
+					}
+				},
+				"CaseResolved(address,uint256)": {
+					"params": {
+						"caseId": "The unique identifier for the case.",
+						"lawyerAddress": "The address of the lawyer handling the case."
+					}
+				},
+				"CorroborationAdded(uint256,address,uint256)": {
+					"params": {
+						"corroborator": "The address of the member adding the corroboration.",
+						"incidentId": "The unique identifier for the incident.",
+						"timestamp": "The time when the corroboration was added."
+					}
+				},
+				"EmergencyResponseConfirmed(address,uint256,address,uint256)": {
+					"params": {
+						"caseId": "The unique identifier for the case.",
+						"lawyerAddress": "The address of the lawyer responding to the emergency.",
+						"memberAddress": "The address of the member involved.",
+						"timestamp": "The time when the response was confirmed."
+					}
+				},
+				"IncidentReported(uint256,address,uint256)": {
+					"params": {
+						"incidentId": "The unique identifier for the incident.",
+						"reporter": "The address of the member reporting the incident.",
+						"timestamp": "The time when the incident was reported."
+					}
+				},
+				"IncidentStatusUpdated(uint256,uint8,address)": {
+					"params": {
+						"incidentId": "The unique identifier for the incident.",
+						"status": "The new verification status (0: Unverified, 1: Verified, 2: Rejected).",
+						"verifier": "The address of the entity that updated the status."
+					}
+				},
+				"LawyerRewarded(address,uint256,uint256)": {
+					"params": {
+						"caseId": "The unique identifier for the case.",
+						"lawyerAddress": "The address of the lawyer receiving the reward.",
+						"rewardAmount": "The amount of reward given to the lawyer."
+					}
+				},
+				"LawyerSignedUp(address)": {
+					"params": {
+						"lawyerAddress": "The address of the lawyer signing up."
+					}
+				},
+				"MembershipNFTMinted(address,uint256)": {
+					"params": {
+						"memberAddress": "The address of the new member.",
+						"tokenId": "The ID of the minted NFT."
+					}
+				},
+				"PaymentTokenUpdated(address)": {
+					"params": {
+						"tokenAddress": "The new token contract address."
+					}
+				},
+				"RepresentativeAssigned(address,address)": {
+					"params": {
+						"memberAddress": "The address of the member.",
+						"representativeAddress": "The address of the legal representative."
+					}
+				},
 				"Transfer(address,address,uint256)": {
 					"details": "Emitted when `tokenId` token is transferred from `from` to `to`."
 				}
 			},
 			"kind": "dev",
 			"methods": {
+				"addCase(address,address,string,uint256)": {
+					"params": {
+						"descriptionMetadata": "A URI describing the case.",
+						"lawyerAddress": "The address of the lawyer handling the case.",
+						"memberAddress": "The address of the member involved in the case.",
+						"rewardAmount": "The reward amount associated with the case."
+					}
+				},
+				"addCorroboration(uint256,string,string[])": {
+					"params": {
+						"comment": "A comment providing additional context.",
+						"incidentId": "The unique identifier for the incident.",
+						"mediaURIs": "An array of URIs pointing to supplementary evidence."
+					}
+				},
 				"approve(address,uint256)": {
 					"details": "See {IERC721-approve}."
 				},
 				"balanceOf(address)": {
 					"details": "See {IERC721-balanceOf}."
 				},
+				"confirmEmergencyResponse(address,uint256,address)": {
+					"params": {
+						"caseId": "The unique identifier for the case.",
+						"lawyerAddress": "The address of the lawyer (Padi) responding to the emergency.",
+						"memberAddress": "The address of the member calling for help."
+					}
+				},
 				"getApproved(uint256)": {
 					"details": "See {IERC721-getApproved}."
 				},
 				"isApprovedForAll(address,address)": {
 					"details": "See {IERC721-isApprovedForAll}."
+				},
+				"isLawyer(address)": {
+					"params": {
+						"lawyerAddress": "The address to check."
+					},
+					"returns": {
+						"_0": "True if the address is a registered lawyer."
+					}
+				},
+				"isMember(address)": {
+					"params": {
+						"memberAddress": "The address to check."
+					},
+					"returns": {
+						"_0": "True if the address is a verified member."
+					}
 				},
 				"name()": {
 					"details": "See {IERC721Metadata-name}."
@@ -851,6 +1399,28 @@
 				},
 				"renounceOwnership()": {
 					"details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby disabling any functionality that is only available to the owner."
+				},
+				"reportIncident(string,string[])": {
+					"params": {
+						"descriptionMetadata": "A URI with details about the incident.",
+						"mediaURIs": "An array of URIs pointing to evidence (e.g., images, videos)."
+					},
+					"returns": {
+						"incidentId": "The unique identifier for the reported incident."
+					}
+				},
+				"resolveCase(address,uint256)": {
+					"params": {
+						"caseId": "The unique identifier for the case.",
+						"lawyerAddress": "The address of the lawyer handling the case."
+					}
+				},
+				"rewardLawyerForEmergency(address,uint256,uint256)": {
+					"params": {
+						"caseId": "The unique identifier for the case.",
+						"lawyerAddress": "The address of the lawyer (Padi).",
+						"rewardAmount": "The amount of tokens to reward the lawyer."
+					}
 				},
 				"safeTransferFrom(address,address,uint256)": {
 					"details": "See {IERC721-safeTransferFrom}."
@@ -875,13 +1445,82 @@
 				},
 				"transferOwnership(address)": {
 					"details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+				},
+				"updateIncidentStatus(uint256,uint8)": {
+					"params": {
+						"incidentId": "The unique identifier for the incident.",
+						"status": "The new verification status (0: Unverified, 1: Verified, 2: Rejected)."
+					}
 				}
 			},
 			"version": 1
 		},
 		"userdoc": {
+			"events": {
+				"CaseAdded(address,uint256,address)": {
+					"notice": "Event emitted when a new case is added for a lawyer."
+				},
+				"CaseResolved(address,uint256)": {
+					"notice": "Event emitted when a case is resolved for a lawyer."
+				},
+				"CorroborationAdded(uint256,address,uint256)": {
+					"notice": "Event emitted when a corroboration is added to an incident."
+				},
+				"EmergencyResponseConfirmed(address,uint256,address,uint256)": {
+					"notice": "Event emitted when an emergency response is confirmed by a lawyer."
+				},
+				"IncidentReported(uint256,address,uint256)": {
+					"notice": "Event emitted when a new incident is reported."
+				},
+				"IncidentStatusUpdated(uint256,uint8,address)": {
+					"notice": "Event emitted when an incident's verification status is updated."
+				},
+				"LawyerRewarded(address,uint256,uint256)": {
+					"notice": "Event emitted when a lawyer is rewarded after confirming an emergency response."
+				},
+				"LawyerSignedUp(address)": {
+					"notice": "Event emitted when a lawyer signs up as a legal representative."
+				},
+				"MembershipNFTMinted(address,uint256)": {
+					"notice": "Event emitted when a membership NFT is minted."
+				},
+				"PaymentTokenUpdated(address)": {
+					"notice": "Event emitted when the payment token is updated."
+				},
+				"RepresentativeAssigned(address,address)": {
+					"notice": "Event emitted when a legal representative is assigned to a member."
+				}
+			},
 			"kind": "user",
-			"methods": {},
+			"methods": {
+				"addCase(address,address,string,uint256)": {
+					"notice": "Track a new case for a lawyer."
+				},
+				"addCorroboration(uint256,string,string[])": {
+					"notice": "Add a corroboration (supporting evidence) to an existing incident."
+				},
+				"confirmEmergencyResponse(address,uint256,address)": {
+					"notice": "Confirm that a lawyer (Padi) has responded to an emergency call from a member."
+				},
+				"isLawyer(address)": {
+					"notice": "Check if an address is a registered lawyer."
+				},
+				"isMember(address)": {
+					"notice": "Check if an address is a verified member."
+				},
+				"reportIncident(string,string[])": {
+					"notice": "Report a new incident of abuse or misconduct."
+				},
+				"resolveCase(address,uint256)": {
+					"notice": "Mark a case as resolved for a lawyer."
+				},
+				"rewardLawyerForEmergency(address,uint256,uint256)": {
+					"notice": "Reward a lawyer (Padi) after confirming their response to an emergency."
+				},
+				"updateIncidentStatus(uint256,uint8)": {
+					"notice": "Update the verification status of an incident."
+				}
+			},
 			"version": 1
 		}
 	},
@@ -1061,20 +1700,28 @@
 				"dweb:/ipfs/QmVUSvooZKEdEdap619tcJjTLcAuH6QBdZqAzWwnAXZAWJ"
 			]
 		},
-		"contracts/IPadiStorage.sol": {
-			"keccak256": "0x7f33173492a9cf3c5d63cb515c59cc25691977b50f56069640ed92f6c9b03420",
+		"contracts/IPadiProtocol.sol": {
+			"keccak256": "0x6b0b93b8f88063cc6155832b04b10056035841ac787dab08edc5f882dccc7f05",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://43d320ea79ff1914e307887e41246971c2da5bf7b01bd961b8754c9752d44b27",
-				"dweb:/ipfs/QmZNdQAvs8NjDDEgKofkGC1VExPSjdFnp4J2K2RMAY5eA3"
+				"bzz-raw://53b50e53c39c9cc7932792b89633397f2432860d39b50e33628a8cf2cd438c28",
+				"dweb:/ipfs/QmZ3ELLghc2hHQ9FQjsvZmbx2ndm2MVg3NgEf1YTTKjcXW"
+			]
+		},
+		"contracts/IPadiStorage.sol": {
+			"keccak256": "0xb5dc23652e797fa05061311e5e1a00eb131c84368701f026550db4f9b6e25b67",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://775bed319610ce62663a83387155db8c87c8da1729f82ab3709c9e763b491d65",
+				"dweb:/ipfs/QmQQxVdRKo7ohZzq2bVEgAuK3m45Rtew5KnsrGWeTECFtt"
 			]
 		},
 		"contracts/PadiProtocol.sol": {
-			"keccak256": "0xaed8b6e798c955dd4fec5a26092b81198e29236a47757c3cf1a3ebe6b2e465bf",
+			"keccak256": "0xc814e395e3a6e3f51283fbe628dbd31045a968d1280cbff973fb2a0adf6d032b",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://95768d0d3cbc5ccec21d9583a4db0c0bab1e7b61f67816aa9e2196a99c462834",
-				"dweb:/ipfs/QmYkjTS5Hp5YZUdzsivmAJ8vjruYM6iVwpPvc9vwGwGECZ"
+				"bzz-raw://7a35ecfc1114b15fcfa4e042a05da8875b4ad06fff41e1446a450bd3d8fb7b85",
+				"dweb:/ipfs/QmY1ferUFt7XR9AWaozp4pWCadKEfy1eYLr7kytHzSMByQ"
 			]
 		},
 		"contracts/PadiTypes.sol": {
