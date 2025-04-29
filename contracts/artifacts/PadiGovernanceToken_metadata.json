@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.29+commit.ab55807c"
+		"version": "0.8.26+commit.8a97fa7a"
 	},
 	"language": "Solidity",
 	"output": {
@@ -8,9 +8,9 @@
 			{
 				"inputs": [
 					{
-						"internalType": "address",
-						"name": "_minter",
-						"type": "address"
+						"internalType": "uint256",
+						"name": "initialSupply",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -431,19 +431,6 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "MAX_SUPPLY",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
 				"inputs": [
 					{
 						"internalType": "address",
@@ -508,24 +495,6 @@
 					}
 				],
 				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "from",
-						"type": "address"
-					},
-					{
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					}
-				],
-				"name": "burn",
-				"outputs": [],
-				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -785,19 +754,6 @@
 			},
 			{
 				"inputs": [],
-				"name": "minter",
-				"outputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
 				"name": "name",
 				"outputs": [
 					{
@@ -906,19 +862,6 @@
 			{
 				"inputs": [],
 				"name": "renounceOwnership",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "_minter",
-						"type": "address"
-					}
-				],
-				"name": "setMinter",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -1208,6 +1151,9 @@
 				"name()": {
 					"details": "Returns the name of the token."
 				},
+				"nonces(address)": {
+					"details": "Unify the two `nonces()` implementations from ERC20Permit & Nonces"
+				},
 				"numCheckpoints(address)": {
 					"details": "Get number of checkpoints for `account`."
 				},
@@ -1236,26 +1182,21 @@
 					"details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
 				}
 			},
-			"title": "Padi Governance Token (PADI-GOV)",
 			"version": 1
 		},
 		"userdoc": {
 			"kind": "user",
 			"methods": {
-				"MAX_SUPPLY()": {
-					"notice": "Must match your stable’s cap"
-				},
-				"minter()": {
-					"notice": "Only this address may mint/burn (set to your PadiToken)"
+				"mint(address,uint256)": {
+					"notice": "Owner can mint new tokens"
 				}
 			},
-			"notice": "Mirrors PadiToken supply for on-chain voting & permits",
 			"version": 1
 		}
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/PadiGovToken.sol": "PadiGovernanceToken"
+			"contracts/PadiToken.sol": "PadiGovernanceToken"
 		},
 		"evmVersion": "cancun",
 		"libraries": {},
@@ -1485,12 +1426,12 @@
 				"dweb:/ipfs/QmQ7s9gMP1nkwThFmoDifnGgpUMsMe5q5ZrAxGDsNnRGza"
 			]
 		},
-		"contracts/PadiGovToken.sol": {
-			"keccak256": "0xf51ae119c8f91e23dea14ab798a4459a005d9253f51257a6257dc4c2b49f50a1",
+		"contracts/PadiToken.sol": {
+			"keccak256": "0x91eb5ec974e7f15f990b2f79f5771ec0dabdf82281ed63828c4052bb1a81225e",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b05b01fb1c89fd2df08cf412ef7b7a5a0b8bcacb095552625fe3d165d4a5bb12",
-				"dweb:/ipfs/QmQWeTB2qfPVceseJUMx7vsmKP9AkKDDb4T7hkon3DGG8s"
+				"bzz-raw://c404289b7d30b954d29381b87d596c0d08b30f4656e30737e00e7ffde370705b",
+				"dweb:/ipfs/QmX9mUDwbBqH32kqhWYHvpMZdckJGnSpRB7t22o3J3Z7aL"
 			]
 		}
 	},

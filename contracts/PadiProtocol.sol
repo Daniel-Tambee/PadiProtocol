@@ -17,6 +17,7 @@ contract PadiProtocol is ERC721, Ownable, IPadiProtocol {
     IERC20 public paymentToken;
     address public padiWallet;
     uint256 private _nftIdCounter = 1;
+    uint256 public nftPrice;
 
     modifier onlyMember(address member) {
         require(
@@ -37,7 +38,8 @@ contract PadiProtocol is ERC721, Ownable, IPadiProtocol {
     constructor(
         address _storage,
         address _paymentToken,
-        address _padiWallet
+        address _padiWallet,
+        uint256 _nftPrice
     ) 
         ERC721("Padi Membership", "PADI")
         Ownable(msg.sender)
@@ -45,6 +47,8 @@ contract PadiProtocol is ERC721, Ownable, IPadiProtocol {
         storageContract = IPadiStorage(_storage);
         paymentToken = IERC20(_paymentToken);
         padiWallet = _padiWallet;
+        nftPrice = _nftPrice;
+
     }
 
     // ================================================================
@@ -57,6 +61,7 @@ contract PadiProtocol is ERC721, Ownable, IPadiProtocol {
         uint256 paymentAmount
     ) external override {
         require(balanceOf(member) == 0, "Already has membership NFT");
+        require(paymentAmount == nftPrice,"pay the exact amount !!!");
         paymentToken.safeTransferFrom(msg.sender, padiWallet, paymentAmount);
 
         uint256 nftId = _nftIdCounter++;

@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.29+commit.ab55807c"
+		"version": "0.8.26+commit.8a97fa7a"
 	},
 	"language": "Solidity",
 	"output": {
@@ -21,6 +21,11 @@
 						"internalType": "address",
 						"name": "_padiWallet",
 						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_nftPrice",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -797,6 +802,19 @@
 						"internalType": "string",
 						"name": "",
 						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "nftPrice",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -1717,11 +1735,11 @@
 			]
 		},
 		"contracts/PadiProtocol.sol": {
-			"keccak256": "0xc814e395e3a6e3f51283fbe628dbd31045a968d1280cbff973fb2a0adf6d032b",
+			"keccak256": "0x56d4a85230aee57d5532589d6db32fbfd7d94d19edf58f77a138cce78260ec28",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://7a35ecfc1114b15fcfa4e042a05da8875b4ad06fff41e1446a450bd3d8fb7b85",
-				"dweb:/ipfs/QmY1ferUFt7XR9AWaozp4pWCadKEfy1eYLr7kytHzSMByQ"
+				"bzz-raw://a4004ba146f5e29006af6ced12e56ace04572ba29a2cc3bef0138343af4eecd1",
+				"dweb:/ipfs/QmberWQ1jCXw5zrPheoNqMaMU4VfTXNMrrHQWRzJFv2bVF"
 			]
 		},
 		"contracts/PadiTypes.sol": {

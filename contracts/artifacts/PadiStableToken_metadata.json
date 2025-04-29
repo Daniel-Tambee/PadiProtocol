@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.29+commit.ab55807c"
+		"version": "0.8.26+commit.8a97fa7a"
 	},
 	"language": "Solidity",
 	"output": {
@@ -33,6 +33,11 @@
 			},
 			{
 				"inputs": [],
+				"name": "CheckpointUnorderedInsertion",
+				"type": "error"
+			},
+			{
+				"inputs": [],
 				"name": "ECDSAInvalidSignature",
 				"type": "error"
 			},
@@ -56,6 +61,22 @@
 					}
 				],
 				"name": "ECDSAInvalidSignatureS",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "increasedSupply",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "cap",
+						"type": "uint256"
+					}
+				],
+				"name": "ERC20ExceededSafeSupply",
 				"type": "error"
 			},
 			{
@@ -174,6 +195,27 @@
 			{
 				"inputs": [
 					{
+						"internalType": "uint256",
+						"name": "timepoint",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint48",
+						"name": "clock",
+						"type": "uint48"
+					}
+				],
+				"name": "ERC5805FutureLookup",
+				"type": "error"
+			},
+			{
+				"inputs": [],
+				"name": "ERC6372InconsistentClock",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "address",
 						"name": "account",
 						"type": "address"
@@ -217,6 +259,22 @@
 			{
 				"inputs": [
 					{
+						"internalType": "uint8",
+						"name": "bits",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					}
+				],
+				"name": "SafeCastOverflowedUintDowncast",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "address",
 						"name": "token",
 						"type": "address"
@@ -234,6 +292,17 @@
 					}
 				],
 				"name": "StringTooLong",
+				"type": "error"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "expiry",
+						"type": "uint256"
+					}
+				],
+				"name": "VotesExpiredSignature",
 				"type": "error"
 			},
 			{
@@ -259,6 +328,56 @@
 					}
 				],
 				"name": "Approval",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "delegator",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "fromDelegate",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "toDelegate",
+						"type": "address"
+					}
+				],
+				"name": "DelegateChanged",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "delegate",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "previousVotes",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "newVotes",
+						"type": "uint256"
+					}
+				],
+				"name": "DelegateVotesChanged",
 				"type": "event"
 			},
 			{
@@ -427,6 +546,19 @@
 			},
 			{
 				"inputs": [],
+				"name": "CLOCK_MODE",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "DOMAIN_SEPARATOR",
 				"outputs": [
 					{
@@ -532,6 +664,55 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"internalType": "uint32",
+						"name": "pos",
+						"type": "uint32"
+					}
+				],
+				"name": "checkpoints",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint48",
+								"name": "_key",
+								"type": "uint48"
+							},
+							{
+								"internalType": "uint208",
+								"name": "_value",
+								"type": "uint208"
+							}
+						],
+						"internalType": "struct Checkpoints.Checkpoint208",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "clock",
+				"outputs": [
+					{
+						"internalType": "uint48",
+						"name": "",
+						"type": "uint48"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "cusd",
 				"outputs": [
@@ -552,6 +733,76 @@
 						"internalType": "uint8",
 						"name": "",
 						"type": "uint8"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "delegatee",
+						"type": "address"
+					}
+				],
+				"name": "delegate",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "delegatee",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "nonce",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "expiry",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint8",
+						"name": "v",
+						"type": "uint8"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "r",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "s",
+						"type": "bytes32"
+					}
+				],
+				"name": "delegateBySig",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "delegates",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
 					}
 				],
 				"stateMutability": "view",
@@ -595,6 +846,68 @@
 						"internalType": "uint256[]",
 						"name": "extensions",
 						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "timepoint",
+						"type": "uint256"
+					}
+				],
+				"name": "getPastTotalSupply",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "timepoint",
+						"type": "uint256"
+					}
+				],
+				"name": "getPastVotes",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "getVotes",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -653,6 +966,25 @@
 						"internalType": "uint256",
 						"name": "",
 						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "numCheckpoints",
+				"outputs": [
+					{
+						"internalType": "uint32",
+						"name": "",
+						"type": "uint32"
 					}
 				],
 				"stateMutability": "view",
@@ -913,6 +1245,11 @@
 		],
 		"devdoc": {
 			"errors": {
+				"CheckpointUnorderedInsertion()": [
+					{
+						"details": "A value was attempted to be inserted on a past checkpoint."
+					}
+				],
 				"ECDSAInvalidSignature()": [
 					{
 						"details": "The signature derives the `address(0)`."
@@ -926,6 +1263,11 @@
 				"ECDSAInvalidSignatureS(bytes32)": [
 					{
 						"details": "The signature has an S value that is in the upper half order."
+					}
+				],
+				"ERC20ExceededSafeSupply(uint256,uint256)": [
+					{
+						"details": "Total supply cap has been exceeded, introducing a risk of votes overflowing."
 					}
 				],
 				"ERC20InsufficientAllowance(address,uint256,uint256)": [
@@ -990,6 +1332,16 @@
 						"details": "Mismatched signature."
 					}
 				],
+				"ERC5805FutureLookup(uint256,uint48)": [
+					{
+						"details": "Lookup to future votes is not available."
+					}
+				],
+				"ERC6372InconsistentClock()": [
+					{
+						"details": "The clock was incorrectly modified."
+					}
+				],
 				"InvalidAccountNonce(address,uint256)": [
 					{
 						"details": "The nonce used for an `account` is not the expected current nonce."
@@ -1005,15 +1357,31 @@
 						"details": "The caller account is not authorized to perform an operation."
 					}
 				],
+				"SafeCastOverflowedUintDowncast(uint8,uint256)": [
+					{
+						"details": "Value doesn't fit in an uint of `bits` size."
+					}
+				],
 				"SafeERC20FailedOperation(address)": [
 					{
 						"details": "An operation with an ERC-20 token failed."
+					}
+				],
+				"VotesExpiredSignature(uint256)": [
+					{
+						"details": "The signature used has expired."
 					}
 				]
 			},
 			"events": {
 				"Approval(address,address,uint256)": {
 					"details": "Emitted when the allowance of a `spender` for an `owner` is set by a call to {approve}. `value` is the new allowance."
+				},
+				"DelegateChanged(address,address,address)": {
+					"details": "Emitted when an account changes their delegate."
+				},
+				"DelegateVotesChanged(address,uint256,uint256)": {
+					"details": "Emitted when a token transfer or delegate change results in changes to a delegate's number of voting units."
 				},
 				"EIP712DomainChanged()": {
 					"details": "MAY be emitted to signal that the domain could have changed."
@@ -1030,6 +1398,9 @@
 			},
 			"kind": "dev",
 			"methods": {
+				"CLOCK_MODE()": {
+					"details": "Machine-readable description of the clock as specified in ERC-6372."
+				},
 				"DOMAIN_SEPARATOR()": {
 					"details": "Returns the domain separator used in the encoding of the signature for {permit}, as defined by {EIP712}."
 				},
@@ -1042,17 +1413,44 @@
 				"balanceOf(address)": {
 					"details": "See {IERC20-balanceOf}."
 				},
+				"checkpoints(address,uint32)": {
+					"details": "Get the `pos`-th checkpoint for `account`."
+				},
+				"clock()": {
+					"details": "Clock used for flagging checkpoints. Can be overridden to implement timestamp based checkpoints (and voting), in which case {CLOCK_MODE} should be overridden as well to match."
+				},
 				"decimals()": {
 					"details": "Returns the number of decimals used to get its user representation. For example, if `decimals` equals `2`, a balance of `505` tokens should be displayed to a user as `5.05` (`505 / 10 ** 2`). Tokens usually opt for a value of 18, imitating the relationship between Ether and Wei. This is the default value returned by this function, unless it's overridden. NOTE: This information is only used for _display_ purposes: it in no way affects any of the arithmetic of the contract, including {IERC20-balanceOf} and {IERC20-transfer}."
 				},
+				"delegate(address)": {
+					"details": "Delegates votes from the sender to `delegatee`."
+				},
+				"delegateBySig(address,uint256,uint256,uint8,bytes32,bytes32)": {
+					"details": "Delegates votes from signer to `delegatee`."
+				},
+				"delegates(address)": {
+					"details": "Returns the delegate that `account` has chosen."
+				},
 				"eip712Domain()": {
 					"details": "returns the fields and values that describe the domain separator used by this contract for EIP-712 signature."
+				},
+				"getPastTotalSupply(uint256)": {
+					"details": "Returns the total supply of votes available at a specific moment in the past. If the `clock()` is configured to use block numbers, this will return the value at the end of the corresponding block. NOTE: This value is the sum of all available votes, which is not necessarily the sum of all delegated votes. Votes that have not been delegated are still part of total supply, even though they would not participate in a vote. Requirements: - `timepoint` must be in the past. If operating using block numbers, the block must be already mined."
+				},
+				"getPastVotes(address,uint256)": {
+					"details": "Returns the amount of votes that `account` had at a specific moment in the past. If the `clock()` is configured to use block numbers, this will return the value at the end of the corresponding block. Requirements: - `timepoint` must be in the past. If operating using block numbers, the block must be already mined."
+				},
+				"getVotes(address)": {
+					"details": "Returns the current amount of votes that `account` has."
 				},
 				"name()": {
 					"details": "Returns the name of the token."
 				},
 				"nonces(address)": {
-					"details": "Returns the current nonce for `owner`. This value must be included whenever a signature is generated for {permit}. Every successful call to {permit} increases ``owner``'s nonce by one. This prevents a signature from being used multiple times."
+					"details": "Resolve the two `nonces()` implementations"
+				},
+				"numCheckpoints(address)": {
+					"details": "Get number of checkpoints for `account`."
 				},
 				"owner()": {
 					"details": "Returns the address of the current owner."
@@ -1104,16 +1502,16 @@
 					"notice": "Update mint/redemption fees (in BPS)"
 				},
 				"setTreasury(address)": {
-					"notice": "Change the fee‐collector address"
+					"notice": "Change the fee-collector address"
 				},
 				"treasury()": {
-					"notice": "Fee‐collector"
+					"notice": "Fee-collector"
 				},
 				"unpause()": {
 					"notice": "Unpause"
 				}
 			},
-			"notice": "1:1 cUSD-backed governance token with permit support",
+			"notice": "1:1 cUSD-backed governance token with permit support & on-chain voting",
 			"version": 1
 		}
 	},
@@ -1139,6 +1537,22 @@
 			"urls": [
 				"bzz-raw://8ed324d3920bb545059d66ab97d43e43ee85fd3bd52e03e401f020afb0b120f6",
 				"dweb:/ipfs/QmfEckWLmZkDDcoWrkEvMWhms66xwTLff9DDhegYpvHo1a"
+			]
+		},
+		"@openzeppelin/contracts/governance/utils/IVotes.sol": {
+			"keccak256": "0x5e2b397ae88fd5c68e4f6762eb9f65f65c36702eb57796495f471d024ce70947",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://348fc8e291d54314bb22437b532f443d5dbfb80c8cc9591567c1af6554ccf856",
+				"dweb:/ipfs/QmP8ZTyitZinxcpwAHeYHhwj7u21zPpKXSiww38V74sXC2"
+			]
+		},
+		"@openzeppelin/contracts/governance/utils/Votes.sol": {
+			"keccak256": "0x3f91c79d6f55db9e4fc36e1cfe6a483a7b0f5be60fecbd979555071673746d47",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://9b1e3c64cbeb2757a2a1a45c69f7f3984a93b0eadd1016341b64f9d94f89d7c4",
+				"dweb:/ipfs/QmP1Mj14U4vMTFa2rv2nodMbWSCov2ac9Md8W2aUcgYdKX"
 			]
 		},
 		"@openzeppelin/contracts/interfaces/IERC1363.sol": {
@@ -1171,6 +1585,22 @@
 			"urls": [
 				"bzz-raw://c5c0f29195ad64cbe556da8e257dac8f05f78c53f90323c0d2accf8e6922d33a",
 				"dweb:/ipfs/QmQ61TED8uaCZwcbh8KkgRSsCav7x7HbcGHwHts3U4DmUP"
+			]
+		},
+		"@openzeppelin/contracts/interfaces/IERC5805.sol": {
+			"keccak256": "0x4b9b89f91adbb7d3574f85394754cfb08c5b4eafca8a7061e2094a019ab8f818",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://7373d5dbb8eb2381aa0883a456fac89283fcaf52f42fa805d4188f270716742a",
+				"dweb:/ipfs/QmVnZDmT4ABvNhRJMaQnbCzsCA8HpyHPVaxi4fCi92LFv2"
+			]
+		},
+		"@openzeppelin/contracts/interfaces/IERC6372.sol": {
+			"keccak256": "0xeb2857b7dafb7e0d8526dbfe794e6c047df2851c9e6ee91dc4a55f3c34af5d33",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://49bf13f6c2a38a9bcc7b852d4e2b9cebb4068b832642cce61069cdb5f06bb2fb",
+				"dweb:/ipfs/QmdKAJVE7rR2kENCZnEM1yKswrGii7WuE9gZpsQvnXJhwn"
 			]
 		},
 		"@openzeppelin/contracts/interfaces/draft-IERC6093.sol": {
@@ -1219,6 +1649,14 @@
 			"urls": [
 				"bzz-raw://ee931d4e832385765967efe6366dcc6d00d6a2d794f9c66ee38283c03882de9c",
 				"dweb:/ipfs/QmR6SkuJGYxpQeLz38rBdghqaWqEPfzUsL9kBoXgEXKtbD"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol": {
+			"keccak256": "0x62dc9346044aabf22d78541bd495aa6ca05a7f5100aed26196ba35d40b59fcb5",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://5221df4501c74cd4493fee1a0f0788e02c4dc78c3c601e9f557f557c5a53ea92",
+				"dweb:/ipfs/QmZpzyYY9dKLrgvYhXSHT93jwqb1UGvtGNMQk5dpECY5pa"
 			]
 		},
 		"@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol": {
@@ -1349,12 +1787,28 @@
 				"dweb:/ipfs/QmVUSvooZKEdEdap619tcJjTLcAuH6QBdZqAzWwnAXZAWJ"
 			]
 		},
-		"contracts/PadiTokenStable.sol": {
-			"keccak256": "0x0186af143bae9b28fb6ea3c07da70c2923109df1cd14fd74bc018191c608e1a3",
+		"@openzeppelin/contracts/utils/structs/Checkpoints.sol": {
+			"keccak256": "0x93ce66a307d66cb14e95dbc8f20641cedf48b2d060bf3bda431d62a4493e6e8d",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://2f3f296e45d1ad029733eb4b571d0333aed94157208d8e96c82d687c59377b26",
-				"dweb:/ipfs/QmX2TYVb5qfLNTRKFgtyoHGsnWWMFrdQENhy8nzWtcLJow"
+				"bzz-raw://10d4122ee13fd8dcd2f468a86031665345d2dfdda76993d1f51201bdeb746f9d",
+				"dweb:/ipfs/QmWxbbYEgyDCjwT4ZtNwujJwB4vdnR2qEKwL2Zrz9JoSDU"
+			]
+		},
+		"@openzeppelin/contracts/utils/types/Time.sol": {
+			"keccak256": "0x36776530f012618bc7526ceb28e77b85e582cb12d9b9466a71d4bd6bf952e4cc",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://9f867d046908497287d8a67643dd5d7e38c4027af4ab0a74ffbe1d6790c383c6",
+				"dweb:/ipfs/QmQ7s9gMP1nkwThFmoDifnGgpUMsMe5q5ZrAxGDsNnRGza"
+			]
+		},
+		"contracts/PadiTokenStable.sol": {
+			"keccak256": "0x46e5870db5663a756b5b2b0b66db2e46c743766299a027796b91f473f85bbac9",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://c2ec90b835dd98c8d247de07325d3d81bef0c5e418aa08e0da6d377fc20294a7",
+				"dweb:/ipfs/QmYkGvYgvNCuETEGx5zWtpdePPxW2rJq9jRc5PUpZGo8a4"
 			]
 		}
 	},
